@@ -18,6 +18,7 @@ import android.util.Log;
 import com.blackchopper.imagepicker.bean.ImageFolder;
 import com.blackchopper.imagepicker.bean.ImageItem;
 import com.blackchopper.imagepicker.loader.ImageLoader;
+import com.blackchopper.imagepicker.ui.ImageGridActivity;
 import com.blackchopper.imagepicker.util.ProviderUtil;
 import com.blackchopper.imagepicker.util.Utils;
 import com.blackchopper.imagepicker.view.CropImageView;
@@ -30,17 +31,10 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * ================================================
- * 作    者：jeasonlzy（廖子尧 Github地址：https://github.com/jeasonlzy0216
- * 版    本：1.0
- * 创建日期：2016/5/19
- * 描    述：图片选择的入口类
- * 修订历史：
- * 2017-03-20
- *
- * @author nanchen
- *         采用单例和弱引用解决Intent传值限制导致的异常
- *         ================================================
+ * author  : Black Chopper
+ * e-mail  : 4884280@qq.com
+ * github  : http://github.com/BlackChopper
+ * project : ImagePicker
  */
 public class ImagePicker {
 
@@ -55,7 +49,8 @@ public class ImagePicker {
     public static final String EXTRA_SELECTED_IMAGE_POSITION = "selected_image_position";
     public static final String EXTRA_IMAGE_ITEMS = "extra_image_items";
     public static final String EXTRA_FROM_ITEMS = "extra_from_items";
-
+    private static ImagePicker mInstance;
+    public Bitmap cropBitmap;
     private boolean multiMode = true;    //图片选择模式
     private int selectLimit = 9;         //最大选择图片数量
     private boolean crop = true;         //裁剪
@@ -69,14 +64,11 @@ public class ImagePicker {
     private CropImageView.Style style = CropImageView.Style.RECTANGLE; //裁剪框的形状
     private File cropCacheFolder;
     private File takeImageFile;
-    public Bitmap cropBitmap;
-
     private ArrayList<ImageItem> mSelectedImages = new ArrayList<>();   //选中的图片集合
     private List<ImageFolder> mImageFolders;      //所有的图片文件夹
     private int mCurrentImageFolderPosition = 0;  //当前选中的文件夹位置 0表示所有图片
-    private List<OnImageSelectedListener> mImageSelectedListeners;          // 图片选中的监听回调
-
-    private static ImagePicker mInstance;
+    private List<OnPictureSelectedListener> mImageSelectedListeners;          // 图片选中的监听回调
+    private OnImageSelectedListener onImageSelectedListener;
 
     private ImagePicker() {
     }
@@ -92,76 +84,117 @@ public class ImagePicker {
         return mInstance;
     }
 
+    /**
+     * 根据系统时间、前缀、后缀产生一个文件
+     */
+    public static File createFile(File folder, String prefix, String suffix) {
+        if (!folder.exists() || !folder.isDirectory()) folder.mkdirs();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA);
+        String filename = prefix + dateFormat.format(new Date(System.currentTimeMillis())) + suffix;
+        return new File(folder, filename);
+    }
+
+    /**
+     * 扫描图片
+     */
+    public static void galleryAddPic(Context context, File file) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri contentUri = Uri.fromFile(file);
+        mediaScanIntent.setData(contentUri);
+        context.sendBroadcast(mediaScanIntent);
+    }
+
+    public void startImagePicker(Activity activity, Class<?> clazz, ArrayList<ImageItem> images) {
+        if (onImageSelectedListener == null) {
+            Log.e(TAG, "\n\n\nOnImageSelectedListener is null , will not return any data\n\n\n");
+        }
+        Intent intent = new Intent(activity, clazz);
+        if (images != null) {
+            intent.putParcelableArrayListExtra(ImageGridActivity.EXTRAS_IMAGES, images);
+            ImagePicker.getInstance().selectedImages(images);
+        }
+        activity.startActivityForResult(intent, 100);
+    }
+
     public boolean isMultiMode() {
         return multiMode;
     }
 
-    public void setMultiMode(boolean multiMode) {
+    public ImagePicker multiMode(boolean multiMode) {
         this.multiMode = multiMode;
+        return this;
     }
 
     public int getSelectLimit() {
         return selectLimit;
     }
 
-    public void setSelectLimit(int selectLimit) {
+    public ImagePicker selectLimit(int selectLimit) {
         this.selectLimit = selectLimit;
+        return this;
     }
 
     public boolean isCrop() {
         return crop;
     }
 
-    public void setCrop(boolean crop) {
+    public ImagePicker crop(boolean crop) {
         this.crop = crop;
+        return this;
     }
 
     public boolean isShowCamera() {
         return showCamera;
     }
 
-    public void setShowCamera(boolean showCamera) {
+    public ImagePicker showCamera(boolean showCamera) {
         this.showCamera = showCamera;
+        return this;
     }
 
     public boolean isSaveRectangle() {
         return isSaveRectangle;
     }
 
-    public void setSaveRectangle(boolean isSaveRectangle) {
+    public ImagePicker saveRectangle(boolean isSaveRectangle) {
         this.isSaveRectangle = isSaveRectangle;
+        return this;
     }
 
     public int getOutPutX() {
         return outPutX;
     }
 
-    public void setOutPutX(int outPutX) {
+    public ImagePicker outPutX(int outPutX) {
         this.outPutX = outPutX;
+        return this;
     }
 
     public int getOutPutY() {
         return outPutY;
     }
 
-    public void setOutPutY(int outPutY) {
+    public ImagePicker outPutY(int outPutY) {
         this.outPutY = outPutY;
+        return this;
     }
 
     public int getFocusWidth() {
         return focusWidth;
     }
 
-    public void setFocusWidth(int focusWidth) {
+    public ImagePicker focusWidth(int focusWidth) {
         this.focusWidth = focusWidth;
+        return this;
     }
 
     public int getFocusHeight() {
         return focusHeight;
     }
 
-    public void setFocusHeight(int focusHeight) {
+    public ImagePicker focusHeight(int focusHeight) {
         this.focusHeight = focusHeight;
+        return this;
     }
 
     public File getTakeImageFile() {
@@ -170,46 +203,51 @@ public class ImagePicker {
 
     public File getCropCacheFolder(Context context) {
         if (cropCacheFolder == null) {
-            cropCacheFolder = new File(Environment.getExternalStorageDirectory().getPath() + "/Android/data/"+context.getPackageName()+"/ImagePicker/cropTemp/");
+            cropCacheFolder = new File(Environment.getExternalStorageDirectory().getPath() + "/Android/data/" + context.getPackageName() + "/ImagePicker/cropTemp/");
             cropCacheFolder.mkdirs();
         }
         return cropCacheFolder;
     }
 
-    public void setCropCacheFolder(File cropCacheFolder) {
+    public ImagePicker cropCacheFolder(File cropCacheFolder) {
         this.cropCacheFolder = cropCacheFolder;
+        return this;
     }
 
     public ImageLoader getImageLoader() {
         return imageLoader;
     }
 
-    public void setImageLoader(ImageLoader imageLoader) {
+    public ImagePicker imageLoader(ImageLoader imageLoader) {
         this.imageLoader = imageLoader;
+        return this;
     }
 
     public CropImageView.Style getStyle() {
         return style;
     }
 
-    public void setStyle(CropImageView.Style style) {
+    public ImagePicker style(CropImageView.Style style) {
         this.style = style;
+        return this;
     }
 
     public List<ImageFolder> getImageFolders() {
         return mImageFolders;
     }
 
-    public void setImageFolders(List<ImageFolder> imageFolders) {
+    public ImagePicker imageFolders(List<ImageFolder> imageFolders) {
         mImageFolders = imageFolders;
+        return this;
     }
 
     public int getCurrentImageFolderPosition() {
         return mCurrentImageFolderPosition;
     }
 
-    public void setCurrentImageFolderPosition(int mCurrentSelectedImageSetPosition) {
+    public ImagePicker currentImageFolderPosition(int mCurrentSelectedImageSetPosition) {
         mCurrentImageFolderPosition = mCurrentSelectedImageSetPosition;
+        return this;
     }
 
     public ArrayList<ImageItem> getCurrentImageFolderItems() {
@@ -229,6 +267,14 @@ public class ImagePicker {
 
     public ArrayList<ImageItem> getSelectedImages() {
         return mSelectedImages;
+    }
+
+    public ImagePicker selectedImages(ArrayList<ImageItem> selectedImages) {
+        if (selectedImages == null) {
+            return null;
+        }
+        this.mSelectedImages = selectedImages;
+        return this;
     }
 
     public void clearSelectedImages() {
@@ -257,7 +303,8 @@ public class ImagePicker {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
-            if (Utils.existSDCard()) takeImageFile = new File(Environment.getExternalStorageDirectory(), "/DCIM/camera/");
+            if (Utils.existSDCard())
+                takeImageFile = new File(Environment.getExternalStorageDirectory(), "/DCIM/camera/");
             else takeImageFile = Environment.getDataDirectory();
             takeImageFile = createFile(takeImageFile, "IMG_", ".jpg");
             if (takeImageFile != null) {
@@ -291,39 +338,12 @@ public class ImagePicker {
         activity.startActivityForResult(takePictureIntent, requestCode);
     }
 
-    /**
-     * 根据系统时间、前缀、后缀产生一个文件
-     */
-    public static File createFile(File folder, String prefix, String suffix) {
-        if (!folder.exists() || !folder.isDirectory()) folder.mkdirs();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA);
-        String filename = prefix + dateFormat.format(new Date(System.currentTimeMillis())) + suffix;
-        return new File(folder, filename);
-    }
-
-    /**
-     * 扫描图片
-     */
-    public static void galleryAddPic(Context context, File file) {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        Uri contentUri = Uri.fromFile(file);
-        mediaScanIntent.setData(contentUri);
-        context.sendBroadcast(mediaScanIntent);
-    }
-
-    /**
-     * 图片选中的监听
-     */
-    public interface OnImageSelectedListener {
-        void onImageSelected(int position, ImageItem item, boolean isAdd);
-    }
-
-    public void addOnImageSelectedListener(OnImageSelectedListener l) {
+    public void addOnPictureSelectedListener(OnPictureSelectedListener l) {
         if (mImageSelectedListeners == null) mImageSelectedListeners = new ArrayList<>();
         mImageSelectedListeners.add(l);
     }
 
-    public void removeOnImageSelectedListener(OnImageSelectedListener l) {
+    public void removeOnPictureSelectedListener(OnPictureSelectedListener l) {
         if (mImageSelectedListeners == null) return;
         mImageSelectedListeners.remove(l);
     }
@@ -334,16 +354,9 @@ public class ImagePicker {
         notifyImageSelectedChanged(position, item, isAdd);
     }
 
-    public void setSelectedImages(ArrayList<ImageItem> selectedImages) {
-        if (selectedImages == null) {
-            return;
-        }
-        this.mSelectedImages = selectedImages;
-    }
-
     private void notifyImageSelectedChanged(int position, ImageItem item, boolean isAdd) {
         if (mImageSelectedListeners == null) return;
-        for (OnImageSelectedListener l : mImageSelectedListeners) {
+        for (OnPictureSelectedListener l : mImageSelectedListeners) {
             l.onImageSelected(position, item, isAdd);
         }
     }
@@ -354,7 +367,7 @@ public class ImagePicker {
     public void restoreInstanceState(Bundle savedInstanceState) {
         cropCacheFolder = (File) savedInstanceState.getSerializable("cropCacheFolder");
         takeImageFile = (File) savedInstanceState.getSerializable("takeImageFile");
-        imageLoader = (ImageLoader) savedInstanceState.getSerializable("imageLoader");
+        imageLoader = savedInstanceState.getParcelable("imageLoader");
         style = (CropImageView.Style) savedInstanceState.getSerializable("style");
         multiMode = savedInstanceState.getBoolean("multiMode");
         crop = savedInstanceState.getBoolean("crop");
@@ -373,7 +386,7 @@ public class ImagePicker {
     public void saveInstanceState(Bundle outState) {
         outState.putSerializable("cropCacheFolder", cropCacheFolder);
         outState.putSerializable("takeImageFile", takeImageFile);
-        outState.putSerializable("imageLoader", imageLoader);
+        outState.putParcelable("imageLoader", imageLoader);
         outState.putSerializable("style", style);
         outState.putBoolean("multiMode", multiMode);
         outState.putBoolean("crop", crop);
@@ -384,6 +397,46 @@ public class ImagePicker {
         outState.putInt("outPutY", outPutY);
         outState.putInt("focusWidth", focusWidth);
         outState.putInt("focusHeight", focusHeight);
+    }
+
+    public ImagePicker imageSelectedListener(OnImageSelectedListener listener) {
+        onImageSelectedListener = listener;
+        return this;
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            if (data != null && requestCode == 100) {
+                ArrayList<ImageItem> images = data.getParcelableArrayListExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                if (onImageSelectedListener != null) {
+                    onImageSelectedListener.onImageSelected(images);
+                    onImageSelectedListener = null;
+                }
+            } else {
+                if (onImageSelectedListener != null) {
+                    onImageSelectedListener.onImageSelected(null);
+                    onImageSelectedListener = null;
+                }
+            }
+        }
+    }
+
+    public void startPhotoPicker(Activity activity, Class<?> clazz) {
+        if (onImageSelectedListener == null) {
+            Log.e(TAG, "\n\n\nOnImageSelectedListener is null , will not return any data\n\n\n");
+        }
+        ImagePicker.getInstance().selectLimit(1);
+        Intent intent = new Intent(activity, clazz);
+        intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+        activity.startActivityForResult(intent, 100);
+    }
+
+    public interface OnPictureSelectedListener {
+        void onImageSelected(int position, ImageItem item, boolean isAdd);
+    }
+
+    public interface OnImageSelectedListener {
+        void onImageSelected(List<ImageItem> items);
     }
 
 }
