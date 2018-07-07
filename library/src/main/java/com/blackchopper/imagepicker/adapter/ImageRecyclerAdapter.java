@@ -14,8 +14,9 @@ import android.widget.Toast;
 import com.blackchopper.imagepicker.ImagePicker;
 import com.blackchopper.imagepicker.R;
 import com.blackchopper.imagepicker.bean.ImageItem;
-import com.blackchopper.imagepicker.ui.ImageBaseActivity;
 import com.blackchopper.imagepicker.ui.ImageGridActivity;
+import com.blackchopper.imagepicker.ui.ImageBaseActivity;
+
 import com.blackchopper.imagepicker.util.Utils;
 import com.blackchopper.imagepicker.view.SuperCheckBox;
 
