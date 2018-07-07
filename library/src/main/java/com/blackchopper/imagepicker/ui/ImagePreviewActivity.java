@@ -55,11 +55,6 @@ public class ImagePreviewActivity extends AbstractImagePreviewActivity {
     }
 
     @Override
-    protected int attachContentRes() {
-        return R.id.content;
-    }
-
-    @Override
     protected int attachBottomBarRes() {
         return R.id.bottom_bar;
     }

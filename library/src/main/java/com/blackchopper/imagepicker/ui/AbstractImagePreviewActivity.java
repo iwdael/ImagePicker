@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.blackchopper.imagepicker.DataHolder;
 import com.blackchopper.imagepicker.ImagePicker;
 import com.blackchopper.imagepicker.R;
 import com.blackchopper.imagepicker.adapter.ImagePageAdapter;
@@ -40,56 +40,71 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
     protected int mCurrentPosition = 0;              //跳转进ImagePreviewFragment时的序号，第几个图片
     protected TextView tv_title;                  //显示当前图片的位置  例如  5/31
     protected ArrayList<ImageItem> selectedImages;   //所有已经选中的图片
-    protected View content;
     protected View top_bar;
     protected ViewPagerFixed viewpager;
     protected ImagePageAdapter mAdapter;
-    protected boolean isFromItems = false;
     private boolean isOrigin;                      //是否选中原图
     private SuperCheckBox cb_check;                //是否选中当前图片的CheckBox
     private SuperCheckBox cb_origin;               //原图
     private Button btn_ok;                         //确认图片的选择
+    private ImageView iv_back;
     private View bottom_bar;
     private View view_bottom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initView();
+        initData();
+        initEvent();
+        initViewPager();
+        initListener();
+    }
+
+    private void initView() {
+        top_bar = findViewById(attachTopBarRes());
+        btn_ok = findViewById(attachButtonOkRes());
+        iv_back = findViewById(attachButtonBackRes());
+        tv_title = findViewById(attachTitleRes());
+        viewpager = findViewById(attachViewPagerRes());
+        bottom_bar = findViewById(attachBottomBarRes());
+        cb_check = findViewById(attachCheckRes());
+        cb_origin = findViewById(attachCheckOriginRes());
+        view_bottom = findViewById(attachBottomViewRes());
+    }
+
+    private void initData() {
         mCurrentPosition = getIntent().getIntExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
-        isFromItems = getIntent().getBooleanExtra(ImagePicker.EXTRA_FROM_ITEMS, false);
-
-        if (isFromItems) {
-            // 据说这样会导致大量图片崩溃
-            mImageItems = getIntent().getParcelableArrayListExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
-        } else {
-            // 下面采用弱引用会导致预览崩溃
-            mImageItems = (ArrayList<ImageItem>) DataHolder.getInstance().retrieve(DataHolder.DH_CURRENT_IMAGE_FOLDER_ITEMS);
-        }
-
+        isOrigin = getIntent().getBooleanExtra(AbstractImagePreviewActivity.ISORIGIN, false);
+        mImageItems = getIntent().getParcelableArrayListExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
         imagePicker = ImagePicker.getInstance();
         selectedImages = imagePicker.getSelectedImages();
+    }
 
-        //初始化控件
-        content = findViewById(attachContentRes());
-
-        //因为状态栏透明后，布局整体会上移，所以给头部加上状态栏的margin值，保证头部不会被覆盖
-        top_bar = findViewById(attachTopBarRes());
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) top_bar.getLayoutParams();
-//            params.topMargin = Utils.getStatusHeight(this);
-//            top_bar.setLayoutParams(params);
-//        }
-        top_bar.findViewById(attachButtonOkRes()).setVisibility(View.GONE);
-        top_bar.findViewById(attachButtonBackRes()).setOnClickListener(new View.OnClickListener() {
+    private void initEvent() {
+        btn_ok.setVisibility(View.GONE);
+        iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        imagePicker.addOnPictureSelectedListener(this);
+        btn_ok.setVisibility(View.VISIBLE);
+        btn_ok.setOnClickListener(this);
+        bottom_bar.setVisibility(View.VISIBLE);
+        cb_origin.setText(getString(R.string.ip_origin));
+        cb_origin.setOnCheckedChangeListener(this);
+        cb_origin.setChecked(isOrigin);
+        //初始化当前页面的状态
+        tv_title.setText(getString(R.string.ip_preview_image_count, mCurrentPosition + 1, mImageItems.size()));
+        onImageSelected(0, null, false);
+        ImageItem item = mImageItems.get(mCurrentPosition);
+        boolean isSelected = imagePicker.isSelect(item);
+        cb_check.setChecked(isSelected);
+    }
 
-        tv_title = findViewById(attachTitleRes());
-
-        viewpager =  findViewById(attachViewPagerRes());
+    private void initViewPager() {
         mAdapter = new ImagePageAdapter(this, mImageItems);
         mAdapter.setPhotoViewClickListener(new ImagePageAdapter.PhotoViewClickListener() {
             @Override
@@ -99,34 +114,9 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
         });
         viewpager.setAdapter(mAdapter);
         viewpager.setCurrentItem(mCurrentPosition, false);
+    }
 
-        //初始化当前页面的状态
-        tv_title.setText(getString(R.string.ip_preview_image_count, mCurrentPosition + 1, mImageItems.size()));
-
-
-        isOrigin = getIntent().getBooleanExtra(AbstractImagePreviewActivity.ISORIGIN, false);
-        imagePicker.addOnPictureSelectedListener(this);
-        btn_ok =   findViewById(attachButtonOkRes());
-        btn_ok.setVisibility(View.VISIBLE);
-        btn_ok.setOnClickListener(this);
-
-        bottom_bar = findViewById(attachBottomBarRes());
-        bottom_bar.setVisibility(View.VISIBLE);
-
-        cb_check = findViewById(attachCheckRes());
-        cb_origin =   findViewById(attachCheckOriginRes());
-        view_bottom = findViewById(attachBottomViewRes());
-        cb_origin.setText(getString(R.string.ip_origin));
-        cb_origin.setOnCheckedChangeListener(this);
-        cb_origin.setChecked(isOrigin);
-
-        //初始化当前页面的状态
-        onImageSelected(0, null, false);
-        ImageItem item = mImageItems.get(mCurrentPosition);
-        boolean isSelected = imagePicker.isSelect(item);
-        tv_title.setText(getString(R.string.ip_preview_image_count, mCurrentPosition + 1, mImageItems.size()));
-        cb_check.setChecked(isSelected);
-        //滑动ViewPager的时候，根据外界的数据改变当前的选中状态和当前的图片的位置描述文本
+    private void initListener() {
         viewpager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -193,11 +183,11 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
 
     protected abstract int attachTitleRes();
 
-    protected abstract int attachContentRes();
-
     protected abstract int attachBottomBarRes();
 
     protected abstract int attachButtonOkRes();
+
+    protected abstract int attachButtonBackRes();
 
 
     /**
@@ -228,7 +218,9 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
         setResult(ImagePicker.RESULT_CODE_BACK, intent);
         finish();
         super.onBackPressed();
-    }    @Override
+    }
+
+    @Override
     public void onClick(View v) {
         int id = v.getId();
         if (id == attachButtonOkRes()) {
@@ -250,7 +242,6 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
         }
     }
 
-    protected abstract int attachButtonBackRes();
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

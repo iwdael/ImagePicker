@@ -33,9 +33,7 @@ public abstract class AbstractImageCropActivity extends ImageBaseActivity implem
     private int mOutputY;
     private ArrayList<ImageItem> mImageItems;
     private ImagePicker imagePicker;
-    protected abstract int attachButtonBackRes();
 
-    protected  abstract int attachButtonOkRes();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +43,12 @@ public abstract class AbstractImageCropActivity extends ImageBaseActivity implem
 
         //初始化View
         findViewById(attachButtonBackRes()).setOnClickListener(this);
-        Button btn_ok =   findViewById(attachButtonOkRes());
+        Button btn_ok = findViewById(attachButtonOkRes());
         btn_ok.setText(getString(R.string.ip_complete));
         btn_ok.setOnClickListener(this);
-        TextView tv_des =  findViewById(attachTitleRes());
+        TextView tv_des = findViewById(attachTitleRes());
         tv_des.setText(getString(R.string.ip_photo_crop));
-        mCropImageView =   findViewById(attachCropImageRes());
+        mCropImageView = findViewById(attachCropImageRes());
         mCropImageView.setOnBitmapSaveCompleteListener(this);
 
         //获取需要的参数
@@ -74,11 +72,16 @@ public abstract class AbstractImageCropActivity extends ImageBaseActivity implem
         mBitmap = BitmapFactory.decodeFile(imagePath, options);
         mCropImageView.setImageBitmap(mCropImageView.rotate(mBitmap, BitmapUtil.getBitmapDegree(imagePath)));
 
-     }
+    }
 
     protected abstract int attachCropImageRes();
 
     protected abstract int attachTitleRes();
+
+    protected abstract int attachButtonBackRes();
+
+    protected abstract int attachButtonOkRes();
+
 
     public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         int width = options.outWidth;
