@@ -1,4 +1,4 @@
-package com.blackchopper.imagepicker;
+package com.blackchopper.demoimagepicker;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,13 +13,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.blackchopper.imagepicker.ImagePicker;
 import com.blackchopper.imagepicker.bean.ImageItem;
 import com.blackchopper.imagepicker.ui.ImageGridActivity;
 import com.blackchopper.imagepicker.view.CropImageView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener {
     private ImagePicker imagePicker;
@@ -42,8 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        imagePicker = ImagePicker.getInstance();
-        imagePicker.setImageLoader(new GlideImageLoader());
+        imagePicker = ImagePicker.getInstance().imageLoader(new GlideImageLoader());
 
         rb_glide = (RadioButton) findViewById(R.id.rb_glide);
         rb_single_select = (RadioButton) findViewById(R.id.rb_single_select);
@@ -91,38 +90,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_open_gallery:
-                if (rb_single_select.isChecked()) imagePicker.setMultiMode(false);
-                else if (rb_muti_select.isChecked()) imagePicker.setMultiMode(true);
+                if (rb_single_select.isChecked()) imagePicker.multiMode(false);
+                else if (rb_muti_select.isChecked()) imagePicker.multiMode(true);
 
                 if (rb_crop_square.isChecked()) {
-                    imagePicker.setStyle(CropImageView.Style.RECTANGLE);
+                    imagePicker.style(CropImageView.Style.RECTANGLE);
                     Integer width = Integer.valueOf(et_crop_width.getText().toString());
                     Integer height = Integer.valueOf(et_crop_height.getText().toString());
                     width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
                     height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, getResources().getDisplayMetrics());
-                    imagePicker.setFocusWidth(width);
-                    imagePicker.setFocusHeight(height);
+                    imagePicker.focusWidth(width);
+                    imagePicker.focusHeight(height);
                 } else if (rb_crop_circle.isChecked()) {
-                    imagePicker.setStyle(CropImageView.Style.CIRCLE);
+                    imagePicker.style(CropImageView.Style.CIRCLE);
                     Integer radius = Integer.valueOf(et_crop_radius.getText().toString());
                     radius = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, radius, getResources().getDisplayMetrics());
-                    imagePicker.setFocusWidth(radius * 2);
-                    imagePicker.setFocusHeight(radius * 2);
+                    imagePicker.focusWidth(radius * 2);
+                    imagePicker.focusHeight(radius * 2);
                 }
 
-                imagePicker.setOutPutX(Integer.valueOf(et_outputx.getText().toString()));
-                imagePicker.setOutPutY(Integer.valueOf(et_outputy.getText().toString()));
+                imagePicker.outPutX(Integer.valueOf(et_outputx.getText().toString()));
+                imagePicker.outPutY(Integer.valueOf(et_outputy.getText().toString()));
+                imagePicker.imageSelectedListener(new ImagePicker.OnImageSelectedListener() {
+                    @Override
+                    public void onImageSelected(List<ImageItem> items) {
+                        Log.i("TAG", "onImageSelected: " + items.toString());
+                    }
+                }).startImagePicker(MainActivity.this, GridActivity.class, null);
 
-                Intent intent = new Intent(this, ImageGridActivity.class);
-                intent.putParcelableArrayListExtra(ImageGridActivity.EXTRAS_IMAGES, new ArrayList<ImageItem>());
-                //ImagePicker.getInstance().setSelectedImages(images);
-                startActivityForResult(intent, 100);
                 break;
             case R.id.btn_open_camera:
-                ImagePicker.getInstance().setSelectLimit(1);
-                Intent intent1 = new Intent( this, ImageGridActivity.class);
-                intent1.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
-                startActivityForResult(intent1, 100);
+                imagePicker.startPhotoPicker(MainActivity.this, GridActivity.class);
                 break;
         }
     }
@@ -130,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         tv_select_limit.setText(String.valueOf(progress));
-        imagePicker.setSelectLimit(progress);
+        imagePicker.selectLimit(progress);
     }
 
     @Override
@@ -147,13 +145,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch (buttonView.getId()) {
             case R.id.cb_show_camera:
-                imagePicker.setShowCamera(isChecked);
+                imagePicker.showCamera(isChecked);
                 break;
             case R.id.cb_crop:
-                imagePicker.setCrop(isChecked);
+                imagePicker.crop(isChecked);
                 break;
             case R.id.cb_isSaveRectangle:
-                imagePicker.setSaveRectangle(isChecked);
+                imagePicker.saveRectangle(isChecked);
                 break;
         }
     }
@@ -161,15 +159,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
-            if (data != null && requestCode == 100) {
-                Log.i("TAG", "onActivityResult: -----------------------");
-                ArrayList<ImageItem> images = data.getParcelableArrayListExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                Log.i("TAG", "onActivityResult: " + images.toString());
-
-            } else {
-                Toast.makeText(this, "没有数据", Toast.LENGTH_SHORT).show();
-            }
-        }
+        imagePicker.onActivityResult(requestCode, resultCode, data);
     }
 }
