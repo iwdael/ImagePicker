@@ -164,6 +164,7 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
     @Override
     protected void onDestroy() {
         imagePicker.removeOnPictureSelectedListener(this);
+        imagePicker.imageSelectedListener(null);
         super.onDestroy();
     }
 
@@ -349,6 +350,7 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
             }
         }
     }
+
 
 
 }

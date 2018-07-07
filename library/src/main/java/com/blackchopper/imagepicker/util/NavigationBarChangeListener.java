@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 
 /**
- * Created by z-chu on 2017/9/4
- * 用于监听导航栏的显示和隐藏，主要用于适配华为EMUI系统上虚拟导航栏可随时收起和展开的情况
+ * author  : Black Chopper
+ * e-mail  : 4884280@qq.com
+ * github  : http://github.com/BlackChopper
+ * project : ImagePicker
  */
 public class NavigationBarChangeListener implements ViewTreeObserver.OnGlobalLayoutListener {
 

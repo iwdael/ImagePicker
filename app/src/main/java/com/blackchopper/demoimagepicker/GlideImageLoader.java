@@ -1,4 +1,4 @@
-package com.blackchopper.imagepicker;
+package com.blackchopper.demoimagepicker;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -6,6 +6,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
 
+import com.blackchopper.imagepicker.R;
 import com.blackchopper.imagepicker.loader.ImageLoader;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;

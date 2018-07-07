@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.blackchopper.imagepicker.ImagePicker;
 import com.blackchopper.imagepicker.bean.ImageItem;
-import com.blackchopper.imagepicker.ui.ImageGridActivity;
 import com.blackchopper.imagepicker.view.CropImageView;
 
 import java.util.List;

@@ -3,13 +3,11 @@ package com.blackchopper.imagepicker.util;
 import android.content.Context;
 
 /**
- * 用于解决provider冲突的util
- *
- * Author: nanchen
- * Email: liushilin520@foxmail.com
- * Date: 2017-03-22  18:55
+ * author  : Black Chopper
+ * e-mail  : 4884280@qq.com
+ * github  : http://github.com/BlackChopper
+ * project : ImagePicker
  */
-
 public class ProviderUtil {
 
     public static String getFileProviderName(Context context){

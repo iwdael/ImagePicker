@@ -410,14 +410,14 @@ public class ImagePicker {
                 ArrayList<ImageItem> images = data.getParcelableArrayListExtra(ImagePicker.EXTRA_RESULT_ITEMS);
                 if (onImageSelectedListener != null) {
                     onImageSelectedListener.onImageSelected(images);
-                    onImageSelectedListener = null;
                 }
             } else {
                 if (onImageSelectedListener != null) {
                     onImageSelectedListener.onImageSelected(null);
-                    onImageSelectedListener = null;
-                }
+                 }
             }
+            Log.v("TAG","onActivityResult");
+            onImageSelectedListener = null;
         }
     }
 

@@ -54,7 +54,6 @@ public class ImmersiveHelper {
                 }
             }
         } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-//            toolbar.setBackgroundColor(translucentPrimaryColor);
             activity.getWindow().setNavigationBarColor(translucentPrimaryColor);
             activity.getWindow().setStatusBarColor(translucentPrimaryColor);
         } else {

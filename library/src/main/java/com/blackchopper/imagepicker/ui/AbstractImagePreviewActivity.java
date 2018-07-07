@@ -2,7 +2,6 @@ package com.blackchopper.imagepicker.ui;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,11 +74,11 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
 
         //因为状态栏透明后，布局整体会上移，所以给头部加上状态栏的margin值，保证头部不会被覆盖
         top_bar = findViewById(attachTopBarRes());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) top_bar.getLayoutParams();
-            params.topMargin = Utils.getStatusHeight(this);
-            top_bar.setLayoutParams(params);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) top_bar.getLayoutParams();
+//            params.topMargin = Utils.getStatusHeight(this);
+//            top_bar.setLayoutParams(params);
+//        }
         top_bar.findViewById(attachButtonOkRes()).setVisibility(View.GONE);
         top_bar.findViewById(attachButtonBackRes()).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,12 +3,10 @@ package com.blackchopper.imagepicker;
 import android.support.v4.content.FileProvider;
 
 /**
- * 自定义一个Provider，以免和引入的项目的provider冲突
- *
- * Author: nanchen
- * Email: liushilin520@foxmail.com
- * Date: 2017-03-17  16:10
+ * author  : Black Chopper
+ * e-mail  : 4884280@qq.com
+ * github  : http://github.com/BlackChopper
+ * project : ImagePicker
  */
-
 public class ImagePickerProvider extends FileProvider {
 }

@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 新的DataHolder，使用单例和弱引用解决崩溃问题
- * <p>
- * Author: nanchen
- * Email: liushilin520@foxmail.com
- * Date: 2017-03-20  07:01
+ * author  : Black Chopper
+ * e-mail  : 4884280@qq.com
+ * github  : http://github.com/BlackChopper
+ * project : ImagePicker
  */
 public class DataHolder {
     public static final String DH_CURRENT_IMAGE_FOLDER_ITEMS = "dh_current_image_folder_items";

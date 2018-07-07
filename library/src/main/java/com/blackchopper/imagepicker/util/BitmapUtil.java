@@ -12,14 +12,11 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- *
- * Bitmap工具类，主要是解决拍照旋转的适配
- *
- * Author: nanchen
- * Email: liushilin520@foxmail.com
- * Date: 2017-03-20  13:27
+ * author  : Black Chopper
+ * e-mail  : 4884280@qq.com
+ * github  : http://github.com/BlackChopper
+ * project : ImagePicker
  */
-
 public class BitmapUtil {
 
     private BitmapUtil() {
