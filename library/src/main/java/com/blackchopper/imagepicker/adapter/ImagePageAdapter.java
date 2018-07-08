@@ -1,20 +1,21 @@
 package com.blackchopper.imagepicker.adapter;
 
-import android.app.Activity;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.PagerAdapter;
-import android.util.DisplayMetrics;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.blackchopper.imagepicker.ImagePicker;
-import com.blackchopper.imagepicker.bean.Image;
-import com.blackchopper.imagepicker.bean.ImageItem;
+import com.blackchopper.imagepicker.R;
 import com.blackchopper.imagepicker.photo.OnPhotoTapListener;
 import com.blackchopper.imagepicker.photo.PhotoView;
-import com.blackchopper.imagepicker.util.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -25,24 +26,28 @@ import java.util.ArrayList;
  */
 public class ImagePageAdapter extends PagerAdapter {
 
-    private int screenWidth;
-    private int screenHeight;
+    private int mPosition;
     private ImagePicker imagePicker;
-    private ArrayList<ImageItem> images = new ArrayList<>();
-    private Activity mActivity;
+    private List<String> images = new ArrayList<>();
+    private AppCompatActivity mActivity;
     public PhotoViewClickListener listener;
+    private boolean mIsFromViewr = false;
 
-    public ImagePageAdapter(Activity activity, ArrayList<ImageItem> images) {
+    public ImagePageAdapter(AppCompatActivity activity, List<String> images, int position) {
         this.mActivity = activity;
         this.images = images;
+        imagePicker = ImagePicker.getInstance();
+        mPosition = position;
+        mIsFromViewr = true;
+    }
 
-        DisplayMetrics dm = Utils.getScreenPix(activity);
-        screenWidth = dm.widthPixels;
-        screenHeight = dm.heightPixels;
+    public ImagePageAdapter(AppCompatActivity activity, List<String> images) {
+        this.mActivity = activity;
+        this.images = images;
         imagePicker = ImagePicker.getInstance();
     }
 
-    public void setData(ArrayList<ImageItem> images) {
+    public void setData(List<String> images) {
         this.images = images;
     }
 
@@ -50,17 +55,27 @@ public class ImagePageAdapter extends PagerAdapter {
         this.listener = listener;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         PhotoView photoView = new PhotoView(mActivity);
-        Image image = images.get(position);
-        imagePicker.getImageLoader().displayImagePreview(mActivity, image.getImageUrl(), photoView, screenWidth, screenHeight);
+
+        String image = images.get(position);
+        imagePicker.getImageLoader().displayImage(image, photoView);
         photoView.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override
             public void onPhotoTap(ImageView view, float x, float y) {
                 if (listener != null) listener.OnPhotoTapListener(view, x, y);
             }
         });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mIsFromViewr) {
+            String name = mActivity.getString(R.string.share_view_photo) + position;
+            photoView.setTransitionName(name);
+            photoView.setTag(name);
+            if (position == mPosition)
+                setStartPostTransition(photoView);
+        }
+
         container.addView(photoView);
         return photoView;
     }
@@ -87,5 +102,19 @@ public class ImagePageAdapter extends PagerAdapter {
 
     public interface PhotoViewClickListener {
         void OnPhotoTapListener(View view, float v, float v1);
+    }
+
+
+    private void setStartPostTransition(final View sharedView) {
+        sharedView.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public boolean onPreDraw() {
+                        sharedView.getViewTreeObserver().removeOnPreDrawListener(this);
+                        mActivity.startPostponedEnterTransition();
+                        return false;
+                    }
+                });
     }
 }

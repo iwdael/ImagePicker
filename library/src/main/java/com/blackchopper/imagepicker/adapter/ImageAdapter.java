@@ -1,25 +1,31 @@
 package com.blackchopper.imagepicker.adapter;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.view.PagerAdapter;
-import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.blackchopper.imagepicker.ImagePicker;
 import com.blackchopper.imagepicker.R;
-import com.blackchopper.imagepicker.photo.OnPhotoTapListener;
-import com.blackchopper.imagepicker.photo.PhotoView;
+import com.blackchopper.imagepicker.ui.ImageViewerActivity;
 import com.blackchopper.imagepicker.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import static android.app.Activity.RESULT_OK;
 
 /**
  * author  : Black Chopper
@@ -27,92 +33,154 @@ import java.util.List;
  * github  : http://github.com/BlackChopper
  * project : ImagePicker
  */
-public class ImageAdapter extends PagerAdapter {
+public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private int mPosition;
-    private int screenWidth;
-    private int screenHeight;
-    private ImagePicker imagePicker;
-    private List<String> images = new ArrayList<>();
-    private AppCompatActivity mActivity;
-    public PhotoViewClickListener listener;
+    int mImageSize;
+    List<String> data = new ArrayList<>();
+    int interval;
+    int marginLeft;
+    int marginRight;
+    int column;
+    RecyclerView.LayoutManager manager;
+    Activity activity;
+    int exitPosition;
+    int enterPosition;
 
-    public ImageAdapter(AppCompatActivity activity, List<String> images, int position) {
-        this.mActivity = activity;
-        this.images = images;
-        DisplayMetrics dm = Utils.getScreenPix(activity);
-        screenWidth = dm.widthPixels;
-        screenHeight = dm.heightPixels;
-        imagePicker = ImagePicker.getInstance();
-        mPosition = position;
+    @SuppressLint("NewApi")
+    public ImageAdapter(Activity activity) {
+        this.activity = activity;
+
     }
 
-    public void setData(List<String> images) {
-        this.images = images;
+    public RecyclerView.LayoutManager getManager() {
+        return manager;
     }
 
-    public void setPhotoViewClickListener(PhotoViewClickListener listener) {
-        this.listener = listener;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        PhotoView photoView = new PhotoView(mActivity);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ImageViewHolder(new ImageView(parent.getContext()));
+    }
 
-        String image = images.get(position);
-        imagePicker.getImageLoader().displayImage(image, photoView);
-        photoView.setOnPhotoTapListener(new OnPhotoTapListener() {
+    @SuppressLint("NewApi")
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        ImagePicker.getInstance().getImageLoader().displayImage(data.get(position), (ImageView) holder.itemView);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+            @SuppressLint("NewApi")
             @Override
-            public void onPhotoTap(ImageView view, float x, float y) {
-                if (listener != null) listener.OnPhotoTapListener(view, x, y);
+            public void onClick(View v) {
+                enterPosition = position;
+                ActivityOptionsCompat compat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(v, v.getTransitionName()));
+                Intent intent = new Intent(activity, ImageViewerActivity.class);
+                intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+                ImagePicker.getInstance().viewerItem(data);
+                ActivityCompat.startActivity(activity, intent, compat.toBundle());
+                setExitSharedElementCallback();
             }
         });
+        String name = holder.itemView.getContext().getResources().getString(R.string.share_view_photo) + position;
+        ((ImageView)holder.itemView).setTransitionName(name);
+    }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && position == mPosition) {
-            Log.i("TAG", "instantiateItem: "+position);
-            photoView.setTransitionName(mActivity.getString(R.string.share_view_photo));
-            setStartPostTransition(photoView);
+    public void setImageSize(int interval, int marginLeft, int marginRight) {
+        this.interval = interval;
+        this.marginLeft = marginLeft;
+        this.marginRight = marginRight;
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return data.size();
+    }
+
+    public void bindData(List<String> list) {
+        if (ImagePicker.getInstance().getImageLoader() == null) {
+            throw new RuntimeException("ImageLoader is null !");
         }
-        container.addView(photoView);
-        return photoView;
+        if (list != null) {
+            computeImageSize(activity, interval, marginLeft, marginRight, list.size());
+            data.clear();
+            data.addAll(list);
+            notifyDataSetChanged();
+        }
     }
 
-    @Override
-    public int getCount() {
-        return images.size();
+    private void computeImageSize(Activity activity, int interval, int marginLeft, int marginRight, int size) {
+        if (size == 0) return;
+        int widthPixels = Utils.getScreenPix(activity).widthPixels;
+        if (size == 1) {
+            column = 1;
+            manager = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false) {
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+            };
+        } else if (size <= 4) {
+            column = 2;
+            manager = new GridLayoutManager(activity, 2) {
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+            };
+        } else {
+            column = 3;
+            manager = new GridLayoutManager(activity, 3) {
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+            };
+        }
+        int width = widthPixels - marginLeft - marginRight - (column) * interval;
+        mImageSize = width / column;
     }
 
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view == object;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
-    }
-
-    @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
-    }
-
-    public interface PhotoViewClickListener {
-        void OnPhotoTapListener(View view, float v, float v1);
+    public void onActivityReenter(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && data != null) {
+            exitPosition = data.getIntExtra(ImagePicker.EXTRA_EXIT_POSITION, enterPosition);
+            Log.i("TAG", "4");
+        }
     }
 
 
-    private void setStartPostTransition(final View sharedView) {
-        sharedView.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                    @Override
-                    public boolean onPreDraw() {
-                        sharedView.getViewTreeObserver().removeOnPreDrawListener(this);
-                        mActivity.startPostponedEnterTransition();
-                        return false;
-                    }
-                });
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void setExitSharedElementCallback() {
+
+        Log.i("TAG", "5");
+        activity.setExitSharedElementCallback(new android.app.SharedElementCallback() {
+            @Override
+            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                Log.i("TAG", "6");
+                if (exitPosition != enterPosition && names.size() > 0 && exitPosition < data.size()) {
+                    names.clear();
+                    sharedElements.clear();
+                    View view = manager.findViewByPosition(exitPosition);
+                    Log.i("TAG","7");
+                    Log.i("TAG","7------name------>>"+view.getTransitionName());
+                    names.add(view.getTransitionName());
+                    sharedElements.put(view.getTransitionName(), view);
+                }
+                activity.setExitSharedElementCallback(null);
+            }
+        });
+    }
+
+
+    public class ImageViewHolder extends RecyclerView.ViewHolder {
+        public ImageViewHolder(View itemView) {
+            super(itemView);
+            ViewGroup.MarginLayoutParams layoutParams;
+            if (column == 1)
+                layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            else
+                layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize);
+            layoutParams.setMargins(interval / 2, interval / 2, interval / 2, interval / 2);
+            itemView.setLayoutParams(layoutParams);
+            ((ImageView) itemView).setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
     }
 }

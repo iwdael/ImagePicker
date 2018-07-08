@@ -20,6 +20,7 @@ import com.blackchopper.imagepicker.ImagePicker;
 import com.blackchopper.imagepicker.R;
 import com.blackchopper.imagepicker.adapter.ImagePageAdapter;
 import com.blackchopper.imagepicker.bean.ImageItem;
+import com.blackchopper.imagepicker.util.CollectionHelper;
 import com.blackchopper.imagepicker.util.ImmersiveHelper;
 import com.blackchopper.imagepicker.util.NavigationBarChangeListener;
 import com.blackchopper.imagepicker.util.Utils;
@@ -120,7 +121,7 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
     }
 
     private void initViewPager() {
-        mAdapter = new ImagePageAdapter(this, mImageItems);
+        mAdapter = new ImagePageAdapter(this, CollectionHelper.imageItem2String(mImageItems));
         mAdapter.setPhotoViewClickListener(new ImagePageAdapter.PhotoViewClickListener() {
             @Override
             public void OnPhotoTapListener(View view, float v, float v1) {

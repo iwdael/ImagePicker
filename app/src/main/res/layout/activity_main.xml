@@ -271,10 +271,9 @@
             android:text="Open Camera"
             android:textAllCaps="false" />
 
-        <ImageView
-            android:id="@+id/iv_photo"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rc_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </ScrollView>

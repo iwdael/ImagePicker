@@ -49,6 +49,7 @@ public class ImagePicker {
     public static final String EXTRA_SELECTED_IMAGE_POSITION = "selected_image_position";
     public static final String EXTRA_IMAGE_ITEMS = "extra_image_items";
     public static final String EXTRA_FROM_ITEMS = "extra_from_items";
+    public static final String EXTRA_EXIT_POSITION = "extra_exit_position";
 
     private static ImagePicker mInstance;
     public Bitmap cropBitmap;
@@ -70,6 +71,7 @@ public class ImagePicker {
     private int mCurrentImageFolderPosition = 0;  //当前选中的文件夹位置 0表示所有图片
     private List<OnPictureSelectedListener> mImageSelectedListeners;          // 图片选中的监听回调
     private OnImageSelectedListener onImageSelectedListener;
+     private List<String> viewerItem;
 
     private ImagePicker() {
     }
@@ -430,6 +432,16 @@ public class ImagePicker {
         Intent intent = new Intent(activity, clazz);
         intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
         activity.startActivityForResult(intent, 100);
+    }
+
+
+
+    public List<String> getViewerItem() {
+        return viewerItem;
+    }
+
+    public   void viewerItem(List<String> data) {
+        viewerItem=data;
     }
 
     public interface OnPictureSelectedListener {
