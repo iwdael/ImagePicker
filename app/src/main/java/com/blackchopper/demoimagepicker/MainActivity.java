@@ -2,6 +2,9 @@ package com.blackchopper.demoimagepicker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
@@ -10,14 +13,18 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.blackchopper.imagepicker.ImagePicker;
 import com.blackchopper.imagepicker.bean.ImageItem;
+import com.blackchopper.imagepicker.ui.ImageViewerActivity;
 import com.blackchopper.imagepicker.view.CropImageView;
+import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener {
@@ -82,7 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btn_open_gallery = (Button) findViewById(R.id.btn_open_gallery);
         btn_open_gallery.setOnClickListener(this);
         findViewById(R.id.btn_open_camera).setOnClickListener(this);
-
+        Glide.with(this).load("http://d.hiphotos.baidu.com/image/pic/item/48540923dd54564e39103dcfbfde9c82d0584fcb.jpg").into((ImageView) findViewById(R.id.iv_photo));
+        findViewById(R.id.iv_photo).setOnClickListener(this);
     }
 
     @Override
@@ -120,6 +128,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_open_camera:
                 imagePicker.startPhotoPicker(MainActivity.this, GridActivity.class);
+                break;
+            case R.id.iv_photo:
+                Intent intent = new Intent(this, ImageViewerActivity.class);
+                intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
+                ArrayList<String> images = new ArrayList<>();
+                images.add("http://d.hiphotos.baidu.com/image/pic/item/48540923dd54564e39103dcfbfde9c82d0584fcb.jpg");
+                intent.putStringArrayListExtra(ImagePicker.EXTRA_IMAGE_ITEMS, images);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, Pair.create(findViewById(R.id.iv_photo), getString(R.string.share_view_photo)));
+                ActivityCompat.startActivity(this, intent, options.toBundle());
                 break;
         }
     }

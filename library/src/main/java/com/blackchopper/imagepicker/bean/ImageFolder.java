@@ -64,4 +64,6 @@ public class ImageFolder implements Parcelable {
         dest.writeParcelable(cover, flags);
         dest.writeTypedList(images);
     }
+
+
 }

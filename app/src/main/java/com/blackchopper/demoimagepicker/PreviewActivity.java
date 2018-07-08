@@ -7,7 +7,7 @@ public class PreviewActivity extends AbstractImagePreviewActivity {
 
     @Override
     protected int attachImmersiveColorRes() {
-        return R.color.white;
+        return R.color.colorPrimaryDark;
     }
 
     @Override
@@ -63,5 +63,13 @@ public class PreviewActivity extends AbstractImagePreviewActivity {
     @Override
     protected int attachButtonBackRes() {
         return R.id.iv_back;
+    }
+
+    @Override
+    protected int attachImmersiveColorRes(boolean show) {
+        if (show)
+            return R.color.colorPrimaryDark;
+        else
+            return  R.color.translucent_white;
     }
 }

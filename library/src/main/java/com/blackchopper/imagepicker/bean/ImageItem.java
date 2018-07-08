@@ -1,7 +1,6 @@
 package com.blackchopper.imagepicker.bean;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 /**
  * author  : Black Chopper
@@ -9,7 +8,7 @@ import android.os.Parcelable;
  * github  : http://github.com/BlackChopper
  * project : ImagePicker
  */
-public class ImageItem implements Parcelable  {
+public class ImageItem implements Image {
 
     public String name;       //图片的名字
     public String path;       //图片的路径
@@ -40,7 +39,6 @@ public class ImageItem implements Parcelable  {
         }
         return super.equals(o);
     }
-
 
 
     public ImageItem() {
@@ -85,4 +83,14 @@ public class ImageItem implements Parcelable  {
         dest.writeString(mimeType);
         dest.writeLong(addTime);
     }
+
+    @Override
+    public String getImageUrl() {
+        return path;
+    }
+
+//    @Override
+//    public String getImageUrl() {
+//        return path;
+//    }
 }

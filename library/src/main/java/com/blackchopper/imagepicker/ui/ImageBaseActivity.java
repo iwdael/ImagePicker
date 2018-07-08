@@ -10,9 +10,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.blackchopper.imagepicker.ImagePicker;
-import com.blackchopper.imagepicker.R;
 import com.blackchopper.imagepicker.util.ImmersiveHelper;
-import com.blackchopper.imagepicker.view.SystemBarTintManager;
 
 /**
  * author  : Black Chopper
@@ -22,7 +20,6 @@ import com.blackchopper.imagepicker.view.SystemBarTintManager;
  */
 public abstract class ImageBaseActivity extends AppCompatActivity {
 
-    protected SystemBarTintManager tintManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +29,8 @@ public abstract class ImageBaseActivity extends AppCompatActivity {
             //设置虚拟导航栏为透明
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-        tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);  //设置上方状态栏的颜色
         setContentView(attachLayoutRes());
-        ImmersiveHelper.setOrChangeTranslucentColor(this, (Toolbar) findViewById(attachTopBarRes()), null, getResources().getColor(attachImmersiveColorRes()));
+        ImmersiveHelper.setOrChangeTranslucentColor(this, attachTopBarRes() != 0 ? (Toolbar) findViewById(attachTopBarRes()) : null, null, getResources().getColor(attachImmersiveColorRes()));
         if (attachImmersiveLightMode())
             ImmersiveHelper.setStatusBarLightMode(getWindow());
     }

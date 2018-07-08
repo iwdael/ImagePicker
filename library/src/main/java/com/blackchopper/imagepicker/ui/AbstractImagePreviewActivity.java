@@ -1,10 +1,11 @@
 package com.blackchopper.imagepicker.ui;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -14,10 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blackchopper.imagepicker.DataHolder;
 import com.blackchopper.imagepicker.ImagePicker;
 import com.blackchopper.imagepicker.R;
 import com.blackchopper.imagepicker.adapter.ImagePageAdapter;
 import com.blackchopper.imagepicker.bean.ImageItem;
+import com.blackchopper.imagepicker.util.ImmersiveHelper;
 import com.blackchopper.imagepicker.util.NavigationBarChangeListener;
 import com.blackchopper.imagepicker.util.Utils;
 import com.blackchopper.imagepicker.view.SuperCheckBox;
@@ -50,6 +53,7 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
     private ImageView iv_back;
     private View bottom_bar;
     private View view_bottom;
+    private boolean isFromItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +80,18 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
     private void initData() {
         mCurrentPosition = getIntent().getIntExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
         isOrigin = getIntent().getBooleanExtra(AbstractImagePreviewActivity.ISORIGIN, false);
-        mImageItems = getIntent().getParcelableArrayListExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+        isFromItems = getIntent().getBooleanExtra(ImagePicker.EXTRA_FROM_ITEMS, false);
+        if (isFromItems)
+            mImageItems = getIntent().getParcelableArrayListExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
+        else
+            mImageItems = (ArrayList<ImageItem>) DataHolder.getInstance().retrieve(DataHolder.DH_CURRENT_IMAGE_FOLDER_ITEMS);
+        if (mImageItems == null) {
+            Log.i("TAG", "initData: null");
+        } else {
+            Log.i("TAG", "initData: " + mImageItems.size());
+        }
+        Log.i("TAG", "initData: isFromItems--->>" + isFromItems);
+
         imagePicker = ImagePicker.getInstance();
         selectedImages = imagePicker.getSelectedImages();
     }
@@ -276,15 +291,19 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
             bottom_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
             top_bar.setVisibility(View.GONE);
             bottom_bar.setVisibility(View.GONE);
-            tintManager.setStatusBarTintResource(Color.TRANSPARENT);//通知栏所需颜色
+            ImmersiveHelper.setOrChangeTranslucentColor(this, (Toolbar) top_bar, null, getResources().getColor(attachImmersiveColorRes(false)));
+            Log.i("TAG", "onImageSingleTap: false");
         } else {
             top_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.top_in));
             bottom_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
             top_bar.setVisibility(View.VISIBLE);
             bottom_bar.setVisibility(View.VISIBLE);
-            tintManager.setStatusBarTintResource(R.color.ip_color_primary_dark);//通知栏所需颜色
+            ImmersiveHelper.setOrChangeTranslucentColor(this, (Toolbar) top_bar, null, getResources().getColor(attachImmersiveColorRes(true)));
+            Log.i("TAG", "onImageSingleTap: true");
         }
     }
+
+    protected abstract int attachImmersiveColorRes(boolean show);
 
 
 }

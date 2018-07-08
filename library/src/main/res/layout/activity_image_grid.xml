@@ -7,7 +7,7 @@
 
     <include
 
-        layout="@layout/include_top_bar"/>
+        layout="@layout/include_toolbar"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

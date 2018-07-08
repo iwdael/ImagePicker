@@ -57,6 +57,11 @@ public class GlideImageLoader implements ImageLoader,Parcelable {
     }
 
     @Override
+    public void displayImage(String path, ImageView imageView) {
+        Glide.with(imageView.getContext()).load(path).into(imageView);
+    }
+
+    @Override
     public void clearMemoryCache() {
 
     }

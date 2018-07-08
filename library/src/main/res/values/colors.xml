@@ -10,4 +10,6 @@
     <color name="ip_text_secondary_inverted">#66ffffff</color>
     <color name="ip_text_primary_inverted">#ffffff</color>
     <color name="white">#ffffff</color>
+    <color name="translucent">#00000000</color>
+    <color name="black">#000</color>
 </resources>

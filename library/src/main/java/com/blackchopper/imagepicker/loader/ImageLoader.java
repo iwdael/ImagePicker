@@ -1,11 +1,8 @@
 package com.blackchopper.imagepicker.loader;
 
 import android.app.Activity;
-import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
-
-import java.io.Serializable;
 
 /**
  * author  : Black Chopper
@@ -18,6 +15,8 @@ public interface ImageLoader extends Parcelable {
     void displayImage(Activity activity, String path, ImageView imageView, int width, int height);
 
     void displayImagePreview(Activity activity, String path, ImageView imageView, int width, int height);
+
+    void displayImage(String path, ImageView imageView);
 
     void clearMemoryCache();
 

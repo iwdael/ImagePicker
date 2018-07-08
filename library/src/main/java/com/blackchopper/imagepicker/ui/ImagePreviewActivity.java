@@ -68,4 +68,12 @@ public class ImagePreviewActivity extends AbstractImagePreviewActivity {
     protected int attachButtonBackRes() {
         return R.id.iv_back;
     }
+
+    @Override
+    protected int attachImmersiveColorRes(boolean show) {
+        if (show)
+            return R.color.ip_color_primary_dark;
+        else
+            return R.color.translucent;
+    }
 }

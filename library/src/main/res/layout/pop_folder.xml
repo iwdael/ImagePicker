@@ -13,12 +13,6 @@
         android:background="#A000"
         android:layout_weight="1">
 
-     <!--   <View
-            android:id="@+id/masker"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#A000"/>
--->
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
@@ -26,7 +20,7 @@
             android:layout_gravity="bottom"
             android:dividerHeight="1px"
             android:background="@android:color/white"
-            tools:listitem="@layout/adapter_folder_list_item"/>
+            tools:listitem="@layout/item_folder"/>
     </FrameLayout>
 
     <View
