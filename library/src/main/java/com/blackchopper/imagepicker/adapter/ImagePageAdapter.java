@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.blackchopper.imagepicker.ImagePicker;
 import com.blackchopper.imagepicker.R;
+import com.blackchopper.imagepicker.photo.OnOutsidePhotoTapListener;
 import com.blackchopper.imagepicker.photo.OnPhotoTapListener;
 import com.blackchopper.imagepicker.photo.PhotoView;
 
@@ -75,10 +76,18 @@ public class ImagePageAdapter extends PagerAdapter {
             if (position == mPosition)
                 setStartPostTransition(photoView);
         }
-
+        photoView.setOnOutsidePhotoTapListener(new OnOutsidePhotoTapListener() {
+            @Override
+            public void onOutsidePhotoTap(ImageView imageView) {
+                mActivity.onBackPressed();
+            }
+        });
         container.addView(photoView);
         return photoView;
     }
+
+
+
 
     @Override
     public int getCount() {

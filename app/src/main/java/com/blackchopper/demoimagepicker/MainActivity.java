@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_open_camera).setOnClickListener(this);
 
         RecyclerView recyclerView = findViewById(R.id.rc_view);
+
         List<String> list = new ArrayList<>();
         list.add("http://a.hiphotos.baidu.com/image/pic/item/c9fcc3cec3fdfc03925a1642d83f8794a4c2262d.jpg");
         list.add("http://a.hiphotos.baidu.com/image/pic/item/c9fcc3cec3fdfc03925a1642d83f8794a4c2262d.jpg");
@@ -96,10 +97,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         list.add("http://a.hiphotos.baidu.com/image/pic/item/c9fcc3cec3fdfc03925a1642d83f8794a4c2262d.jpg");
 
         imageAdapter = new ImageAdapter(this);
-        imageAdapter.setImageSize(10, 0, 0);
+        imageAdapter.setImageSize(10, 40, 40);
         imageAdapter.bindData(list);
-        recyclerView.setLayoutManager(imageAdapter.getManager());
-        recyclerView.setAdapter(imageAdapter);
+        imageAdapter.setRecyclerView(recyclerView);
+
     }
 
     @Override

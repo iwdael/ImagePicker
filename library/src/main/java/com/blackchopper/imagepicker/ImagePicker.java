@@ -71,7 +71,7 @@ public class ImagePicker {
     private int mCurrentImageFolderPosition = 0;  //当前选中的文件夹位置 0表示所有图片
     private List<OnPictureSelectedListener> mImageSelectedListeners;          // 图片选中的监听回调
     private OnImageSelectedListener onImageSelectedListener;
-     private List<String> viewerItem;
+    private List<String> viewerItem;
 
     private ImagePicker() {
     }
@@ -417,9 +417,9 @@ public class ImagePicker {
             } else {
                 if (onImageSelectedListener != null) {
                     onImageSelectedListener.onImageSelected(null);
-                 }
+                }
             }
-            Log.v("TAG","onActivityResult");
+            Log.v("TAG", "onActivityResult");
             onImageSelectedListener = null;
         }
     }
@@ -435,13 +435,12 @@ public class ImagePicker {
     }
 
 
-
     public List<String> getViewerItem() {
         return viewerItem;
     }
 
-    public   void viewerItem(List<String> data) {
-        viewerItem=data;
+    public void viewerItem(List<String> data) {
+        viewerItem = data;
     }
 
     public interface OnPictureSelectedListener {

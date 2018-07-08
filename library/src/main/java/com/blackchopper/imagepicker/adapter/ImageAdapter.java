@@ -11,7 +11,6 @@ import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -49,7 +48,6 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @SuppressLint("NewApi")
     public ImageAdapter(Activity activity) {
         this.activity = activity;
-
     }
 
     public RecyclerView.LayoutManager getManager() {
@@ -79,8 +77,9 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 setExitSharedElementCallback();
             }
         });
+
         String name = holder.itemView.getContext().getResources().getString(R.string.share_view_photo) + position;
-        ((ImageView)holder.itemView).setTransitionName(name);
+        holder.itemView.setTransitionName(name);
     }
 
     public void setImageSize(int interval, int marginLeft, int marginRight) {
@@ -92,7 +91,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data.size() > 9 ? 9 : data.size();
     }
 
     public void bindData(List<String> list) {
@@ -137,12 +136,12 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
         int width = widthPixels - marginLeft - marginRight - (column) * interval;
         mImageSize = width / column;
+
     }
 
     public void onActivityReenter(int resultCode, Intent data) {
         if (resultCode == RESULT_OK && data != null) {
             exitPosition = data.getIntExtra(ImagePicker.EXTRA_EXIT_POSITION, enterPosition);
-            Log.i("TAG", "4");
         }
     }
 
@@ -150,23 +149,27 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setExitSharedElementCallback() {
 
-        Log.i("TAG", "5");
         activity.setExitSharedElementCallback(new android.app.SharedElementCallback() {
             @Override
             public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                Log.i("TAG", "6");
                 if (exitPosition != enterPosition && names.size() > 0 && exitPosition < data.size()) {
                     names.clear();
                     sharedElements.clear();
                     View view = manager.findViewByPosition(exitPosition);
-                    Log.i("TAG","7");
-                    Log.i("TAG","7------name------>>"+view.getTransitionName());
                     names.add(view.getTransitionName());
                     sharedElements.put(view.getTransitionName(), view);
                 }
                 activity.setExitSharedElementCallback(null);
             }
         });
+    }
+
+    public void setRecyclerView(RecyclerView recyclerView) {
+        recyclerView.setLayoutManager(getManager());
+        recyclerView.setAdapter(this);
+        ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
+        ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) layoutParams;
+        marginLayoutParams.setMargins(40, 0, 40, 0);
     }
 
 
