@@ -59,7 +59,6 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return new ImageViewHolder(new ImageView(parent.getContext()));
     }
 
-    @SuppressLint("NewApi")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ImagePicker.getInstance().getImageLoader().displayImage(data.get(position), (ImageView) holder.itemView);
@@ -69,17 +68,22 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             @Override
             public void onClick(View v) {
                 enterPosition = position;
-                ActivityOptionsCompat compat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(v, v.getTransitionName()));
                 Intent intent = new Intent(activity, ImageViewerActivity.class);
                 intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
                 ImagePicker.getInstance().viewerItem(data);
-                ActivityCompat.startActivity(activity, intent, compat.toBundle());
-                setExitSharedElementCallback();
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptionsCompat compat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(v, v.getTransitionName()));
+                    ActivityCompat.startActivity(activity, intent, compat.toBundle());
+                    setExitSharedElementCallback();
+                } else {
+                    activity.startActivity(intent);
+                }
             }
         });
 
         String name = holder.itemView.getContext().getResources().getString(R.string.share_view_photo) + position;
-        holder.itemView.setTransitionName(name);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP)
+            holder.itemView.setTransitionName(name);
     }
 
     public void setImageSize(int interval, int marginLeft, int marginRight) {
