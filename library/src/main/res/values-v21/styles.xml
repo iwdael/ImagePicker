@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" >
+    <style name="ImagePicker" parent="Theme.AppCompat.Light.NoActionBar" >
         <!-- Customize your theme here. -->
 
         <item name="android:windowContentTransitions">true</item>
@@ -8,7 +8,7 @@
         <item name="android:windowSharedElementExitTransition">@transition/change_image_transform</item>
     </style>
 
-    <style name="AppTheme.Transparent" parent="AppTheme">
+    <style name="ImagePicker.Transparent" parent="ImagePicker">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>

@@ -36,7 +36,7 @@
 
         <activity
             android:name=".ui.ImageViewerActivity"
-            android:theme="@style/AppTheme.Transparent" />
+            android:theme="@style/ImagePicker.Transparent" />
     </application>
 
 </manifest>
