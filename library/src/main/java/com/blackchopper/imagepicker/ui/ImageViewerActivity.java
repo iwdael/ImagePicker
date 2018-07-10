@@ -35,6 +35,16 @@ public class ImageViewerActivity extends ImageBaseActivity {
         initViewPager();
     }
 
+    @Override
+    protected boolean attachStatusEmbed() {
+        return true;
+    }
+
+    @Override
+    protected boolean attachNavigationEmbed() {
+        return true;
+    }
+
     private void initData() {
         mImages = ImagePicker.getInstance().getViewerItem();
         mPosition = getIntent().getIntExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, 0);
@@ -98,7 +108,7 @@ public class ImageViewerActivity extends ImageBaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                indicator.setText(getString(R.string.indicator, position+1, mImages.size()));
+                indicator.setText(getString(R.string.indicator, position + 1, mImages.size()));
             }
 
             @Override
@@ -106,7 +116,7 @@ public class ImageViewerActivity extends ImageBaseActivity {
 
             }
         });
-        indicator.setText(getString(R.string.indicator, mPosition+1, mImages.size()));
+        indicator.setText(getString(R.string.indicator, mPosition + 1, mImages.size()));
     }
 
     @SuppressLint("NewApi")

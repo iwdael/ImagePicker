@@ -19,6 +19,7 @@ import com.blackchopper.imagepicker.ImagePicker;
 import com.blackchopper.imagepicker.adapter.ImageAdapter;
 import com.blackchopper.imagepicker.bean.ImageItem;
 import com.blackchopper.imagepicker.view.CropImageView;
+import com.bumptech.glide.request.target.ViewTarget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ViewTarget.setTagId(R.id.glide_tag);
         imagePicker = ImagePicker.getInstance().imageLoader(new GlideImageLoader());
 
         rb_glide = (RadioButton) findViewById(R.id.rb_glide);
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         list.add("http://a.hiphotos.baidu.com/image/pic/item/c9fcc3cec3fdfc03925a1642d83f8794a4c2262d.jpg");
         list.add("http://a.hiphotos.baidu.com/image/pic/item/c9fcc3cec3fdfc03925a1642d83f8794a4c2262d.jpg");
         list.add("http://a.hiphotos.baidu.com/image/pic/item/c9fcc3cec3fdfc03925a1642d83f8794a4c2262d.jpg");
-
+        imagePicker.shareView(false);
         imageAdapter = new ImageAdapter(this);
         imageAdapter.setImageSize(10, 40, 40);
         imageAdapter.bindData(list);

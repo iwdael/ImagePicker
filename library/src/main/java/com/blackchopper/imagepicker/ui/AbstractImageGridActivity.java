@@ -41,6 +41,7 @@ import java.util.List;
  */
 public abstract class AbstractImageGridActivity extends ImageBaseActivity implements ImageDataSource.OnImagesLoadedListener, ImageRecyclerAdapter.OnImageItemClickListener, ImagePicker.OnPictureSelectedListener, View.OnClickListener {
 
+    public static final String TAG = AbstractImageGridActivity.class.getName();
     public static final int REQUEST_PERMISSION_STORAGE = 0x01;
     public static final int REQUEST_PERMISSION_CAMERA = 0x02;
     public static final String EXTRAS_TAKE_PICKERS = "TAKE";
@@ -60,6 +61,15 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
     ImageRecyclerAdapter mRecyclerAdapter;
     View iv_back;
 
+    @Override
+    protected boolean attachNavigationEmbed() {
+        return false;
+    }
+
+    @Override
+    protected boolean attachStatusEmbed() {
+        return false;
+    }
 
     protected abstract int attachRecyclerViewRes();
 
@@ -96,18 +106,21 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        Log.i(TAG, "onSaveInstanceState: ");
         outState.putBoolean(EXTRAS_TAKE_PICKERS, directPhoto);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        Log.i(TAG, "onRestoreInstanceState: ");
         directPhoto = savedInstanceState.getBoolean(EXTRAS_TAKE_PICKERS, false);
     }
 
     private void initRecycler() {
+        Log.i(TAG, "initRecycler: ");
         mImageFolderAdapter = new ImageFolderAdapter(this, null);
-        mRecyclerAdapter = new ImageRecyclerAdapter(this, null);
+        mRecyclerAdapter = new ImageRecyclerAdapter(this);
         onImageSelected(0, null, false);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
             if (checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
@@ -179,6 +192,8 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
         } else if (id == attachDirectoryRes()) {
             if (mImageFolders == null || mImageFolders.size() == 0) {
                 Log.i("ImageGridActivity", "您的手机没有图片");
+                Log.i(TAG, "onClick: mImageFolders.size" + (mImageFolders == null ? "null" : mImageFolders.size()));
+                Log.i(TAG, "onClick: mAdapter.size" + (mRecyclerAdapter == null ? "null" : mRecyclerAdapter.getItemCount()));
                 return;
             }
             //点击文件夹按钮
@@ -216,7 +231,7 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
                 mFolderPopupWindow.dismiss();
                 ImageFolder imageFolder = (ImageFolder) adapterView.getAdapter().getItem(position);
                 if (null != imageFolder) {
-                    mRecyclerAdapter.refreshData(imageFolder.images);
+                    mRecyclerAdapter.bindData(imageFolder.images);
                     tv_dir.setText(imageFolder.name);
                 }
             }
@@ -229,9 +244,9 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
         this.mImageFolders = imageFolders;
         imagePicker.imageFolders(imageFolders);
         if (imageFolders.size() == 0) {
-            mRecyclerAdapter.refreshData(null);
+            mRecyclerAdapter.clearData();
         } else {
-            mRecyclerAdapter.refreshData(imageFolders.get(0).images);
+            mRecyclerAdapter.bindData(imageFolders.get(0).images);
         }
         mRecyclerAdapter.setOnImageItemClickListener(this);
         rc_view.setLayoutManager(new GridLayoutManager(this, 3));
@@ -339,6 +354,7 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_PERMISSION_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.i(TAG, "onRequestPermissionsResult: ");
                 new ImageDataSource(this, null, this);
             } else {
                 showToast("权限被禁止，无法选择本地图片");
@@ -351,7 +367,6 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
             }
         }
     }
-
 
 
 }

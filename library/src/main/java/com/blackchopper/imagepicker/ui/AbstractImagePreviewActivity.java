@@ -258,6 +258,15 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
         }
     }
 
+    @Override
+    protected boolean attachNavigationEmbed() {
+        return true;
+    }
+
+    @Override
+    protected boolean attachStatusEmbed() {
+        return false;
+    }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

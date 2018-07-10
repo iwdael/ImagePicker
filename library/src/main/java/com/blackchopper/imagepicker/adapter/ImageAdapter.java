@@ -71,7 +71,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 Intent intent = new Intent(activity, ImageViewerActivity.class);
                 intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
                 ImagePicker.getInstance().viewerItem(data);
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP && ImagePicker.getInstance().isShareView()) {
                     ActivityOptionsCompat compat = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(v, v.getTransitionName()));
                     ActivityCompat.startActivity(activity, intent, compat.toBundle());
                     setExitSharedElementCallback();

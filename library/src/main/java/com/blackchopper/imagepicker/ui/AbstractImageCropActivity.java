@@ -82,6 +82,15 @@ public abstract class AbstractImageCropActivity extends ImageBaseActivity implem
 
     protected abstract int attachButtonOkRes();
 
+    @Override
+    protected boolean attachNavigationEmbed() {
+        return false;
+    }
+
+    @Override
+    protected boolean attachStatusEmbed() {
+        return false;
+    }
 
     public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         int width = options.outWidth;

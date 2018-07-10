@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
  */
 public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-
+    public static final String TAG = ImageRecyclerAdapter.class.getName();
     private static final int ITEM_TYPE_CAMERA = 0;  //第一个条目是相机
     private static final int ITEM_TYPE_NORMAL = 1;  //第一个条目不是相机
     private ImagePicker imagePicker;
@@ -50,20 +51,26 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         void onImageItemClick(View view, ImageItem imageItem, int position);
     }
 
-    public void refreshData(ArrayList<ImageItem> images) {
-        if (images == null || images.size() == 0) this.images = new ArrayList<>();
-        else this.images = images;
+    public void bindData(ArrayList<ImageItem> images) {
+        if (images == null) return;
+        this.images.clear();
+        this.images.addAll(images);
+        Log.i(TAG, "bindData: " + images.size());
+        notifyDataSetChanged();
+    }
+
+    public void clearData() {
+        this.images.clear();
+        Log.i(TAG, "clearData: ");
         notifyDataSetChanged();
     }
 
     /**
      * 构造方法
      */
-    public ImageRecyclerAdapter(Activity activity, ArrayList<ImageItem> images) {
-        this.mActivity = activity;
-        if (images == null || images.size() == 0) this.images = new ArrayList<>();
-        else this.images = images;
-
+    public ImageRecyclerAdapter(Activity activity) {
+        images = new ArrayList<>();
+        mActivity = activity;
         mImageSize = Utils.getImageItemWidth(mActivity);
         imagePicker = ImagePicker.getInstance();
         isShowCamera = imagePicker.isShowCamera();
@@ -73,18 +80,18 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == ITEM_TYPE_CAMERA){
-            return new CameraViewHolder(mInflater.inflate(R.layout.item_camera,parent,false));
+        if (viewType == ITEM_TYPE_CAMERA) {
+            return new CameraViewHolder(mInflater.inflate(R.layout.item_camera, parent, false));
         }
-        return new ImageViewHolder(mInflater.inflate(R.layout.item_image,parent,false));
+        return new ImageViewHolder(mInflater.inflate(R.layout.item_image, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof CameraViewHolder){
-            ((CameraViewHolder)holder).bindCamera();
-        }else if (holder instanceof ImageViewHolder){
-            ((ImageViewHolder)holder).bind(position);
+        if (holder instanceof CameraViewHolder) {
+            ((CameraViewHolder) holder).bindCamera();
+        } else if (holder instanceof ImageViewHolder) {
+            ((ImageViewHolder) holder).bind(position);
         }
     }
 
@@ -127,12 +134,12 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             rootView = itemView;
             ivThumb = (ImageView) itemView.findViewById(R.id.iv_thumb);
             mask = itemView.findViewById(R.id.mask);
-            checkView=itemView.findViewById(R.id.checkView);
+            checkView = itemView.findViewById(R.id.checkView);
             cbCheck = (SuperCheckBox) itemView.findViewById(R.id.cb_check);
             itemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //让图片是个正方形
         }
 
-        void bind(final int position){
+        void bind(final int position) {
             final ImageItem imageItem = getItem(position);
             ivThumb.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -183,7 +190,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             mItemView = itemView;
         }
 
-        void bindCamera(){
+        void bindCamera() {
             mItemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //让图片是个正方形
             mItemView.setTag(null);
             mItemView.setOnClickListener(new View.OnClickListener() {

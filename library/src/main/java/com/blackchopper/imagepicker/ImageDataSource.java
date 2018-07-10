@@ -36,13 +36,8 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private FragmentActivity activity;
     private OnImagesLoadedListener loadedListener;                     //图片加载完成的回调接口
-    private ArrayList<ImageFolder> imageFolders = new ArrayList<>();   //所有的图片文件夹
 
-    /**
-     * @param activity       用于初始化LoaderManager，需要兼容到2.3
-     * @param path           指定扫描的文件夹目录，可以为 null，表示扫描所有图片
-     * @param loadedListener 图片加载完成的监听
-     */
+
     public ImageDataSource(FragmentActivity activity, String path, OnImagesLoadedListener loadedListener) {
         this.activity = activity;
         this.loadedListener = loadedListener;
@@ -73,14 +68,14 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        imageFolders.clear();
+        List<ImageFolder> imageFolders = new ArrayList<>();
         if (data != null) {
             ArrayList<ImageItem> allImages = new ArrayList<>();   //所有图片的集合,不分文件夹
             while (data.moveToNext()) {
                 //查询数据
                 String imageName = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
                 String imagePath = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[1]));
-                
+
                 File file = new File(imagePath);
                 if (!file.exists() || file.length() <= 0) {
                     continue;
@@ -119,7 +114,7 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
                 }
             }
             //防止没有图片报异常
-            if (data.getCount() > 0 && allImages.size()>0) {
+            if (data.getCount() > 0 && allImages.size() > 0) {
                 //构造所有图片的集合
                 ImageFolder allImagesFolder = new ImageFolder();
                 allImagesFolder.name = activity.getResources().getString(R.string.ip_all_images);
@@ -130,6 +125,7 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
             }
         }
 
+        if (imageFolders.size() == 0 ) return;
         //回调接口，通知图片数据准备完成
         ImagePicker.getInstance().imageFolders(imageFolders);
         loadedListener.onImagesLoaded(imageFolders);
@@ -137,10 +133,11 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        System.out.println("--------");
-    }
+     }
 
-    /** 所有图片加载完成的回调接口 */
+    /**
+     * 所有图片加载完成的回调接口
+     */
     public interface OnImagesLoadedListener {
         void onImagesLoaded(List<ImageFolder> imageFolders);
     }

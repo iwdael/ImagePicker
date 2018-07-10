@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
@@ -52,7 +51,6 @@ public class ImagePicker {
     public static final String EXTRA_EXIT_POSITION = "extra_exit_position";
 
     private static ImagePicker mInstance;
-    public Bitmap cropBitmap;
     private boolean multiMode = true;    //图片选择模式
     private int selectLimit = 9;         //最大选择图片数量
     private boolean crop = true;         //裁剪
@@ -71,9 +69,21 @@ public class ImagePicker {
     private int mCurrentImageFolderPosition = 0;  //当前选中的文件夹位置 0表示所有图片
     private List<OnPictureSelectedListener> mImageSelectedListeners;          // 图片选中的监听回调
     private OnImageSelectedListener onImageSelectedListener;
+    private boolean shareView = true;
+
+
     private List<String> viewerItem;
 
     private ImagePicker() {
+    }
+
+    public void shareView(boolean shareView) {
+        this.shareView = shareView;
+    }
+
+    public boolean isShareView() {
+
+        return shareView;
     }
 
     public static ImagePicker getInstance() {
