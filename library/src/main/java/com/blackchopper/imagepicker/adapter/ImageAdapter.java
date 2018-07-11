@@ -82,7 +82,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         });
 
         String name = holder.itemView.getContext().getResources().getString(R.string.share_view_photo) + position;
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             holder.itemView.setTransitionName(name);
     }
 
