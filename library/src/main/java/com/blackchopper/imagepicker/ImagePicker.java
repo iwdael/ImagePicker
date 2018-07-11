@@ -1,23 +1,31 @@
 package com.blackchopper.imagepicker;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v4.util.Pair;
 import android.util.Log;
+
+import android.view.View;
 
 import com.blackchopper.imagepicker.bean.ImageFolder;
 import com.blackchopper.imagepicker.bean.ImageItem;
 import com.blackchopper.imagepicker.loader.ImageLoader;
 import com.blackchopper.imagepicker.ui.ImageGridActivity;
+import com.blackchopper.imagepicker.ui.ImageViewerActivity;
 import com.blackchopper.imagepicker.util.ProviderUtil;
 import com.blackchopper.imagepicker.util.Utils;
 import com.blackchopper.imagepicker.view.CropImageView;
@@ -127,6 +135,21 @@ public class ImagePicker {
             ImagePicker.getInstance().selectedImages(images);
         }
         activity.startActivityForResult(intent, 100);
+    }
+
+    public void startImageViewer(Activity activity, List<String> images, View view, int position) {
+        if (images == null || images.size() == 0)
+            return;
+        ImagePicker.getInstance().viewerItem(images);
+        Intent intent = new Intent(activity, ImageViewerActivity.class);
+        intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+
+        if (VERSION.SDK_INT > VERSION_CODES.LOLLIPOP && ImagePicker.getInstance().isShareView()) {
+            ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(view, activity.getString(R.string.share_view_photo) + position));
+            ActivityCompat.startActivity(activity, intent, option.toBundle());
+        } else {
+            activity.startActivity(intent);
+        }
     }
 
     public boolean isMultiMode() {

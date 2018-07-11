@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.blackchopper.imagepicker.ImagePicker;
 import com.blackchopper.imagepicker.R;
 import com.blackchopper.imagepicker.adapter.ImagePageAdapter;
-import com.blackchopper.imagepicker.util.ImmersiveHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,6 @@ public class ImageViewerActivity extends ImageBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ImmersiveHelper.setTransparent(this);
         initData();
         initViewPager();
     }

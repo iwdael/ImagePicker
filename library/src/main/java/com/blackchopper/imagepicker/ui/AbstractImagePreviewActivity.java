@@ -21,11 +21,11 @@ import com.blackchopper.imagepicker.R;
 import com.blackchopper.imagepicker.adapter.ImagePageAdapter;
 import com.blackchopper.imagepicker.bean.ImageItem;
 import com.blackchopper.imagepicker.util.CollectionHelper;
-import com.blackchopper.imagepicker.util.ImmersiveHelper;
 import com.blackchopper.imagepicker.util.NavigationBarChangeListener;
 import com.blackchopper.imagepicker.util.Utils;
 import com.blackchopper.imagepicker.view.SuperCheckBox;
 import com.blackchopper.imagepicker.view.ViewPagerFixed;
+import com.blackchopper.immersive.Immersive;
 
 import java.util.ArrayList;
 
@@ -301,14 +301,16 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
             bottom_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
             top_bar.setVisibility(View.GONE);
             bottom_bar.setVisibility(View.GONE);
-            ImmersiveHelper.setOrChangeTranslucentColor(this, (Toolbar) top_bar, null, getResources().getColor(attachImmersiveColorRes(false)));
+            Immersive.setNavigationBarColorRes(this,  attachImmersiveColorRes(false));
+            Immersive.setStatusBarColorRes(this,  attachImmersiveColorRes(false));
             Log.i("TAG", "onImageSingleTap: false");
         } else {
             top_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.top_in));
             bottom_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
             top_bar.setVisibility(View.VISIBLE);
             bottom_bar.setVisibility(View.VISIBLE);
-            ImmersiveHelper.setOrChangeTranslucentColor(this, (Toolbar) top_bar, null, getResources().getColor(attachImmersiveColorRes(true)));
+            Immersive.setNavigationBarColorRes(this, getResources().getColor(attachImmersiveColorRes(true)));
+            Immersive.setStatusBarColorRes(this,  attachImmersiveColorRes(true));
             Log.i("TAG", "onImageSingleTap: true");
         }
     }
