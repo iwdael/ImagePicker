@@ -144,7 +144,7 @@ public class ImagePicker {
         Intent intent = new Intent(activity, ImageViewerActivity.class);
         intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
 
-        if (VERSION.SDK_INT > VERSION_CODES.LOLLIPOP && ImagePicker.getInstance().isShareView()) {
+        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && ImagePicker.getInstance().isShareView()) {
             ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(view, activity.getString(R.string.share_view_photo) + position));
             ActivityCompat.startActivity(activity, intent, option.toBundle());
         } else {
