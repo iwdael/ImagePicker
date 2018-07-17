@@ -309,7 +309,7 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
             bottom_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
             top_bar.setVisibility(View.VISIBLE);
             bottom_bar.setVisibility(View.VISIBLE);
-            Immersive.setNavigationBarColorRes(this, getResources().getColor(attachImmersiveColorRes(true)));
+            Immersive.setNavigationBarColorRes(this, attachImmersiveColorRes(true));
             Immersive.setStatusBarColorRes(this,  attachImmersiveColorRes(true));
             Log.i("TAG", "onImageSingleTap: true");
         }
