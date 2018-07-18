@@ -16,6 +16,7 @@
 
 package com.google.zxing.client.android;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,7 +28,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.blackchopper.zxing.BaseCaptureActivity;
-import com.google.zxing.R;
+import com.blackchopper.zxing.R;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -67,6 +68,7 @@ public final class BeepManager implements MediaPlayer.OnErrorListener, Closeable
     }
   }
 
+  @SuppressLint("MissingPermission")
   public synchronized void playBeepSoundAndVibrate(boolean playBeep, boolean vibrate) {
     if (playBeep && mediaPlayer != null) {
       mediaPlayer.start();
@@ -92,7 +94,7 @@ public final class BeepManager implements MediaPlayer.OnErrorListener, Closeable
   private MediaPlayer buildMediaPlayer(Context activity) {
     MediaPlayer mediaPlayer = new MediaPlayer();
     try {
-      AssetFileDescriptor file = activity.getResources().openRawResourceFd(com.google.zxing.R.raw.beep);
+      AssetFileDescriptor file = activity.getResources().openRawResourceFd(R.raw.beep);
       try {
         mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
       } finally {
