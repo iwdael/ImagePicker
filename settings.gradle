@@ -1,1 +1,1 @@
-include ':app', ':picker', ':zxing'
+include ':app', ':picker'
