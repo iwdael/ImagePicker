@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AutoScannerView">
+        <attr name="scannerDrawable" format="reference"></attr>
+        <attr name="maskColor" format="color" />
+        <attr name="triAngleColor" format="color" />
+        <attr name="lineColor" format="color" />
+        <attr name="textColor" format="color" />
+    </declare-styleable>
+
+
+
+
+</resources>
