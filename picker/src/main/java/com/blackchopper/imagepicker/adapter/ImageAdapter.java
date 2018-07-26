@@ -61,7 +61,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        ImagePicker.getInstance().getImageLoader().displayImage(data.get(position), (ImageView) holder.itemView);
+        ImagePicker.getInstance().getImageLoader().displayImagePreview(activity, data.get(position), (ImageView) holder.itemView, Utils.getScreenPix(activity).widthPixels, -1);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
 
             @SuppressLint("NewApi")
@@ -86,16 +86,15 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             holder.itemView.setTransitionName(name);
     }
 
+    @Override
+    public int getItemCount() {
+        return data.size() > 9 ? 9 : data.size();
+    }
+
     public void setImageSize(int interval, int marginLeft, int marginRight) {
         this.interval = interval;
         this.marginLeft = marginLeft;
         this.marginRight = marginRight;
-    }
-
-
-    @Override
-    public int getItemCount() {
-        return data.size() > 9 ? 9 : data.size();
     }
 
     public void bindData(List<String> list) {
