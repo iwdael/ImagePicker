@@ -14,6 +14,7 @@ import com.blackchopper.imagepicker.R;
 import com.blackchopper.imagepicker.photo.OnOutsidePhotoTapListener;
 import com.blackchopper.imagepicker.photo.OnPhotoTapListener;
 import com.blackchopper.imagepicker.photo.PhotoView;
+import com.blackchopper.imagepicker.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +28,11 @@ import java.util.List;
  */
 public class ImagePageAdapter extends PagerAdapter {
 
+    public PhotoViewClickListener listener;
     private int mPosition;
     private ImagePicker imagePicker;
     private List<String> images = new ArrayList<>();
     private AppCompatActivity mActivity;
-    public PhotoViewClickListener listener;
     private boolean mIsFromViewr = false;
 
     public ImagePageAdapter(AppCompatActivity activity, List<String> images, int position) {
@@ -56,13 +57,21 @@ public class ImagePageAdapter extends PagerAdapter {
         this.listener = listener;
     }
 
+    @Override
+    public int getCount() {
+        return images.size();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         PhotoView photoView = new PhotoView(mActivity);
 
         String image = images.get(position);
-        imagePicker.getImageLoader().displayImage(image, photoView);
+        if (mIsFromViewr)
+            imagePicker.getImageLoader().displayImagePreview(mActivity, image, photoView, Utils.getScreenPix(mActivity).widthPixels, -1);
+        else
+            imagePicker.getImageLoader().displayImage(image, photoView);
         photoView.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override
             public void onPhotoTap(ImageView view, float x, float y) {
@@ -86,12 +95,9 @@ public class ImagePageAdapter extends PagerAdapter {
         return photoView;
     }
 
-
-
-
     @Override
-    public int getCount() {
-        return images.size();
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        container.removeView((View) object);
     }
 
     @Override
@@ -100,19 +106,9 @@ public class ImagePageAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
-    }
-
-    @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
-
-    public interface PhotoViewClickListener {
-        void OnPhotoTapListener(View view, float v, float v1);
-    }
-
 
     private void setStartPostTransition(final View sharedView) {
         sharedView.getViewTreeObserver().addOnPreDrawListener(
@@ -125,5 +121,10 @@ public class ImagePageAdapter extends PagerAdapter {
                         return false;
                     }
                 });
+    }
+
+
+    public interface PhotoViewClickListener {
+        void OnPhotoTapListener(View view, float v, float v1);
     }
 }
