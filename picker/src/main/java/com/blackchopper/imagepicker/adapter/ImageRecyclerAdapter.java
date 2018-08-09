@@ -15,13 +15,14 @@ import android.widget.Toast;
 import com.blackchopper.imagepicker.ImagePicker;
 import com.blackchopper.imagepicker.R;
 import com.blackchopper.imagepicker.bean.ImageItem;
-import com.blackchopper.imagepicker.ui.ImageGridActivity;
 import com.blackchopper.imagepicker.ui.ImageBaseActivity;
-
+import com.blackchopper.imagepicker.ui.ImageGridActivity;
 import com.blackchopper.imagepicker.util.Utils;
 import com.blackchopper.imagepicker.view.SuperCheckBox;
 
 import java.util.ArrayList;
+
+import static com.blackchopper.imagepicker.ImageDataSource.LOADER_TYPE_VIDEO;
 
 /**
  * author  : Black Chopper
@@ -34,6 +35,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     public static final String TAG = ImageRecyclerAdapter.class.getName();
     private static final int ITEM_TYPE_CAMERA = 0;  //第一个条目是相机
     private static final int ITEM_TYPE_NORMAL = 1;  //第一个条目不是相机
+    private final int loadType;
     private ImagePicker imagePicker;
     private Activity mActivity;
     private ArrayList<ImageItem> images;       //当前需要显示的所有的图片数据
@@ -43,12 +45,22 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     private LayoutInflater mInflater;
     private OnImageItemClickListener listener;   //图片被点击的监听
 
-    public void setOnImageItemClickListener(OnImageItemClickListener listener) {
-        this.listener = listener;
+    /**
+     * 构造方法
+     */
+    public ImageRecyclerAdapter(Activity activity, int loadType) {
+        images = new ArrayList<>();
+        mActivity = activity;
+        mImageSize = Utils.getImageItemWidth(mActivity);
+        imagePicker = ImagePicker.getInstance();
+        isShowCamera = imagePicker.isShowCamera();
+        mSelectedImages = imagePicker.getSelectedImages();
+        mInflater = LayoutInflater.from(activity);
+        this.loadType = loadType;
     }
 
-    public interface OnImageItemClickListener {
-        void onImageItemClick(View view, ImageItem imageItem, int position);
+    public void setOnImageItemClickListener(OnImageItemClickListener listener) {
+        this.listener = listener;
     }
 
     public void bindData(ArrayList<ImageItem> images) {
@@ -63,19 +75,6 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         this.images.clear();
         Log.i(TAG, "clearData: ");
         notifyDataSetChanged();
-    }
-
-    /**
-     * 构造方法
-     */
-    public ImageRecyclerAdapter(Activity activity) {
-        images = new ArrayList<>();
-        mActivity = activity;
-        mImageSize = Utils.getImageItemWidth(mActivity);
-        imagePicker = ImagePicker.getInstance();
-        isShowCamera = imagePicker.isShowCamera();
-        mSelectedImages = imagePicker.getSelectedImages();
-        mInflater = LayoutInflater.from(activity);
     }
 
     @Override
@@ -120,6 +119,10 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
+    public interface OnImageItemClickListener {
+        void onImageItemClick(View view, ImageItem imageItem, int position);
+    }
+
     private class ImageViewHolder extends RecyclerView.ViewHolder {
 
         View rootView;
@@ -127,7 +130,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         View mask;
         View checkView;
         SuperCheckBox cbCheck;
-
+        ImageView ivPlay;
 
         ImageViewHolder(View itemView) {
             super(itemView);
@@ -136,6 +139,9 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             mask = itemView.findViewById(R.id.mask);
             checkView = itemView.findViewById(R.id.checkView);
             cbCheck = (SuperCheckBox) itemView.findViewById(R.id.cb_check);
+            ivPlay = itemView.findViewById(R.id.iv_play);
+            if (loadType == LOADER_TYPE_VIDEO)
+                ivPlay.setVisibility(View.VISIBLE);
             itemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //让图片是个正方形
         }
 
