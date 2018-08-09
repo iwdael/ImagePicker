@@ -1,13 +1,11 @@
 package com.blackchopper.imagepicker;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -18,7 +16,6 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.util.Pair;
 import android.util.Log;
-
 import android.view.View;
 
 import com.blackchopper.imagepicker.bean.ImageFolder;
@@ -36,6 +33,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static com.blackchopper.imagepicker.ImageDataSource.LOADER_TYPE_IAMGE;
+import static com.blackchopper.imagepicker.ImageDataSource.LOADER_TYPE_VIDEO;
 
 /**
  * author  : Black Chopper
@@ -76,22 +76,13 @@ public class ImagePicker {
     private List<ImageFolder> mImageFolders;      //所有的图片文件夹
     private int mCurrentImageFolderPosition = 0;  //当前选中的文件夹位置 0表示所有图片
     private List<OnPictureSelectedListener> mImageSelectedListeners;          // 图片选中的监听回调
-    private OnImageSelectedListener onImageSelectedListener;
+    private OnSelectedListener onImageSelectedListener;
     private boolean shareView = true;
-
+    private int loadType = LOADER_TYPE_IAMGE;
 
     private List<String> viewerItem;
 
     private ImagePicker() {
-    }
-
-    public void shareView(boolean shareView) {
-        this.shareView = shareView;
-    }
-
-    public boolean isShareView() {
-
-        return shareView;
     }
 
     public static ImagePicker getInstance() {
@@ -125,6 +116,15 @@ public class ImagePicker {
         context.sendBroadcast(mediaScanIntent);
     }
 
+    public void shareView(boolean shareView) {
+        this.shareView = shareView;
+    }
+
+    public boolean isShareView() {
+
+        return shareView;
+    }
+
     public void startImagePicker(Activity activity, Class<?> clazz, ArrayList<ImageItem> images) {
         if (onImageSelectedListener == null) {
             Log.e(TAG, "\n\n\nOnImageSelectedListener is null , will not return any data\n\n\n");
@@ -134,6 +134,20 @@ public class ImagePicker {
             intent.putParcelableArrayListExtra(ImageGridActivity.EXTRAS_IMAGES, images);
             ImagePicker.getInstance().selectedImages(images);
         }
+        activity.startActivityForResult(intent, 100);
+    }
+
+
+    public void startVideoPicker(Activity activity, Class<?> clazz ) {
+        if (onImageSelectedListener == null) {
+            Log.e(TAG, "\n\n\nOnImageSelectedListener is null , will not return any data\n\n\n");
+        }
+        crop(false);
+        showCamera(false);
+        selectLimit(1);
+        multiMode(false);
+        loadType(LOADER_TYPE_VIDEO);
+        Intent intent = new Intent(activity, clazz);
         activity.startActivityForResult(intent, 100);
     }
 
@@ -176,6 +190,11 @@ public class ImagePicker {
 
     public ImagePicker crop(boolean crop) {
         this.crop = crop;
+        return this;
+    }
+
+    public ImagePicker loadType(int loadType) {
+        this.loadType = loadType;
         return this;
     }
 
@@ -435,7 +454,7 @@ public class ImagePicker {
         outState.putInt("focusHeight", focusHeight);
     }
 
-    public ImagePicker imageSelectedListener(OnImageSelectedListener listener) {
+    public ImagePicker selectedListener(OnSelectedListener listener) {
         onImageSelectedListener = listener;
         return this;
     }
@@ -476,11 +495,15 @@ public class ImagePicker {
         viewerItem = data;
     }
 
+    public int getLoadType() {
+        return loadType;
+    }
+
     public interface OnPictureSelectedListener {
         void onImageSelected(int position, ImageItem item, boolean isAdd);
     }
 
-    public interface OnImageSelectedListener {
+    public interface OnSelectedListener {
         void onImageSelected(List<ImageItem> items);
     }
 
