@@ -13,4 +13,7 @@
     <string name="ip_origin_size">原图(%1$s)</string>
     <string name="share_view_photo">share_view_photo</string>
     <string name="indicator">%1$d/%2$d</string>
+    <string name="all_video">所有视频</string>
+    <string name="image">图片</string>
+    <string name="video">视频</string>
 </resources>
