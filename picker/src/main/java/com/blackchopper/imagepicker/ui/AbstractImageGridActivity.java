@@ -60,16 +60,7 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
     RecyclerView rc_view;
     ImageRecyclerAdapter mRecyclerAdapter;
     View iv_back;
-
-    @Override
-    protected boolean attachNavigationEmbed() {
-        return false;
-    }
-
-    @Override
-    protected boolean attachStatusEmbed() {
-        return false;
-    }
+    TextView tv_title;
 
     protected abstract int attachRecyclerViewRes();
 
@@ -85,9 +76,25 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
 
     protected abstract int attachDirectoryNameRes();
 
+    protected abstract int attachTitleRes();
+
     protected abstract Class<?> attachPreviewActivityClass();
 
     protected abstract Class<?> attachCropActivityClass();
+
+    protected int attachDirectoryName(boolean isImage) {
+        if (isImage)
+            return R.string.ip_all_images;
+        else
+            return R.string.all_video;
+    }
+
+    protected int attachTitleName(boolean isImage) {
+        if (isImage)
+            return R.string.image;
+        else
+            return R.string.video;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +108,16 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
         initRecycler();
 
 
+    }
+
+    @Override
+    protected boolean attachNavigationEmbed() {
+        return false;
+    }
+
+    @Override
+    protected boolean attachStatusEmbed() {
+        return false;
     }
 
     @Override
@@ -120,16 +137,16 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
     private void initRecycler() {
         Log.i(TAG, "initRecycler: ");
         mImageFolderAdapter = new ImageFolderAdapter(this, null);
-        mRecyclerAdapter = new ImageRecyclerAdapter(this);
+        mRecyclerAdapter = new ImageRecyclerAdapter(this, imagePicker.getLoadType());
         onImageSelected(0, null, false);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
             if (checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                new ImageDataSource(this, null, this);
+                new ImageDataSource(this, null, imagePicker.getLoadType(), this);
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_STORAGE);
             }
         } else {
-            new ImageDataSource(this, null, this);
+            new ImageDataSource(this, null, imagePicker.getLoadType(), this);
         }
     }
 
@@ -165,6 +182,7 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
         ll_dir = findViewById(attachDirectoryRes());
         tv_dir = findViewById(attachDirectoryNameRes());
         iv_back = findViewById(attachButtonBackRes());
+        tv_title = findViewById(attachTitleRes());
         if (imagePicker.isMultiMode()) {
             btn_ok.setVisibility(View.VISIBLE);
             tv_preview.setVisibility(View.VISIBLE);
@@ -172,12 +190,14 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
             btn_ok.setVisibility(View.GONE);
             tv_preview.setVisibility(View.GONE);
         }
+        tv_dir.setText(attachDirectoryName(imagePicker.getLoadType() == ImageDataSource.LOADER_TYPE_IAMGE));
+        tv_title.setText(attachTitleName(imagePicker.getLoadType() == ImageDataSource.LOADER_TYPE_IAMGE));
     }
 
     @Override
     protected void onDestroy() {
         imagePicker.removeOnPictureSelectedListener(this);
-        imagePicker.imageSelectedListener(null);
+        imagePicker.selectedListener(null);
         super.onDestroy();
     }
 
@@ -355,7 +375,7 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
         if (requestCode == REQUEST_PERMISSION_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.i(TAG, "onRequestPermissionsResult: ");
-                new ImageDataSource(this, null, this);
+                new ImageDataSource(this, null, imagePicker.getLoadType(), this);
             } else {
                 showToast("权限被禁止，无法选择本地图片");
             }
