@@ -65,6 +65,11 @@ public class GridActivity extends AbstractImageGridActivity {
     }
 
     @Override
+    protected int attachTitleRes() {
+        return R.id.tv_title;
+    }
+
+    @Override
     protected Class<?> attachPreviewActivityClass() {
         return PreviewActivity.class;
     }
@@ -73,4 +78,5 @@ public class GridActivity extends AbstractImageGridActivity {
     protected Class<?> attachCropActivityClass() {
         return CropActivity.class;
     }
+
 }
