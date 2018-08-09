@@ -129,16 +129,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 imagePicker.outPutX(Integer.valueOf(et_outputx.getText().toString()));
                 imagePicker.outPutY(Integer.valueOf(et_outputy.getText().toString()));
-                imagePicker.imageSelectedListener(new ImagePicker.OnImageSelectedListener() {
+                imagePicker.selectedListener(new ImagePicker.OnSelectedListener() {
                     @Override
                     public void onImageSelected(List<ImageItem> items) {
-                        Log.i("TAG", "onImageSelected: " + items.toString());
+                        Log.i("TAG", "selectedListener: " + items.toString());
                     }
                 }).startImagePicker(MainActivity.this, GridActivity.class, null);
 
                 break;
             case R.id.btn_open_camera:
-                imagePicker.startPhotoPicker(MainActivity.this, GridActivity.class);
+                imagePicker.startVideoPicker(MainActivity.this, GridActivity.class);
                 break;
 //            case R.id.iv_photo:
 //                Intent intent = new Intent(this, ImageViewerActivity.class);
