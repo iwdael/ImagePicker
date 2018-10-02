@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.blackchopper.imagepicker.view.ViewPagerFixed
+    <com.hacknife.imagepicker.view.ViewPagerFixed
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp">
 
-            <com.blackchopper.imagepicker.view.SuperCheckBox
+            <com.hacknife.imagepicker.view.SuperCheckBox
                 android:id="@+id/cb_origin"
                 style="@style/SuperCheckboxTheme"
                 android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
                 android:textColor="#000"
                 android:visibility="invisible" />
 
-            <com.blackchopper.imagepicker.view.SuperCheckBox
+            <com.hacknife.imagepicker.view.SuperCheckBox
                 android:id="@+id/cb_check"
                 style="@style/SuperCheckboxTheme"
                 android:layout_width="wrap_content"

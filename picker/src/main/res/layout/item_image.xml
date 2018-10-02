@@ -35,7 +35,7 @@
         android:paddingRight="10dp"
         android:paddingTop="12dp">
 
-        <com.blackchopper.imagepicker.view.SuperCheckBox
+        <com.hacknife.imagepicker.view.SuperCheckBox
             android:id="@+id/cb_check"
             style="@style/SuperCheckboxTheme"
             android:layout_width="wrap_content"

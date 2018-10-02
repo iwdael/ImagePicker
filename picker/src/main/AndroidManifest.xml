@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.blackchopper.imagepicker">
+    package="com.hacknife.imagepicker">
 
     <!-- 在SDCard中创建与删除文件权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
@@ -14,18 +14,18 @@
     <application>
 
         <activity
-            android:name=".ui.ImageGridActivity"
+            android:name="com.hacknife.imagepicker.ui.ImageGridActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".ui.ImageCropActivity"
+            android:name="com.hacknife.imagepicker.ui.ImageCropActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="false" />
         <activity
-            android:name=".ui.ImagePreviewActivity"
+            android:name="com.hacknife.imagepicker.ui.ImagePreviewActivity"
             android:configChanges="orientation|screenSize" />
 
         <provider
-            android:name=".ImagePickerProvider"
+            android:name="com.hacknife.imagepicker.ImagePickerProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -35,7 +35,7 @@
         </provider>
 
         <activity
-            android:name=".ui.ImageViewerActivity"
+            android:name="com.hacknife.imagepicker.ui.ImageViewerActivity"
             android:theme="@style/ImagePicker.Transparent" />
     </application>
 

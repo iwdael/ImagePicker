@@ -8,7 +8,7 @@
     <include layout="@layout/include_toolbar" />
 
 
-    <com.blackchopper.imagepicker.view.CropImageView
+    <com.hacknife.imagepicker.view.CropImageView
         android:id="@+id/cv_crop_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

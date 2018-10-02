@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.blackchopper.demoimagepicker"
+        applicationId "com.hacknife.demoimagepicker"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
