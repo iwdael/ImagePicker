@@ -187,7 +187,10 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize);
             layoutParams.setMargins(interval / 2, interval / 2, interval / 2, interval / 2);
             itemView.setLayoutParams(layoutParams);
-            ((ImageView) itemView).setScaleType(ImageView.ScaleType.CENTER_CROP);
+            if (column == 1)
+                ((ImageView) itemView).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            else
+                ((ImageView) itemView).setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
     }
 }
