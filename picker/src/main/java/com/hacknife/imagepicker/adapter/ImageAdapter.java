@@ -35,7 +35,7 @@ import static android.app.Activity.RESULT_OK;
  * project : ImagePicker
  * 单独提供的适配器
  */
-public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
 
     int mImageSize;
     List<String> data = new ArrayList<>();
@@ -58,14 +58,14 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ImageViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image_viewer, null));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        ImagePicker.getInstance().getImageLoader().displayImagePreview(activity, data.get(position), (ImageView) holder.itemView, Utils.getScreenPix(activity).widthPixels, -1);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(ImageViewHolder holder, final int position) {
+        ImagePicker.getInstance().getImageLoader().displayImagePreview(activity, data.get(position),   holder.imageView, Utils.getScreenPix(activity).widthPixels, -1);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
 
             @SuppressLint("NewApi")
             @Override
@@ -84,9 +84,9 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }
         });
 
-        String name = holder.itemView.getContext().getResources().getString(R.string.share_view_photo) + position;
+        String name = holder.imageView.getContext().getResources().getString(R.string.share_view_photo) + position;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            holder.itemView.setTransitionName(name);
+            holder.imageView.setTransitionName(name);
     }
 
     @Override
@@ -180,9 +180,11 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {
+        public ImageView imageView;
+
         public ImageViewHolder(View itemView) {
             super(itemView);
-            ImageView imageView = itemView.findViewById(R.id.iv_cover);
+            imageView = itemView.findViewById(R.id.iv_cover);
 
             LinearLayout.MarginLayoutParams layoutParams;
             if (column == 1)
