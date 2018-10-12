@@ -183,7 +183,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             } else {
                 cbCheck.setVisibility(View.GONE);
             }
-            imagePicker.getImageLoader().displayImage(mActivity, imageItem.path, ivThumb, mImageSize, mImageSize); //显示图片
+            imagePicker.getImageLoader().displayFileImage(ivThumb, imageItem.path); //显示图片
         }
 
     }

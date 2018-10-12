@@ -3,7 +3,7 @@
     android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000">
+    android:background="@color/black">
 
     <com.hacknife.imagepicker.view.ViewPagerFixed
         android:id="@+id/viewpager"
@@ -11,9 +11,20 @@
         android:layout_height="match_parent"
         android:background="#000" />
 
-    <include
-        android:id="@+id/top_bar"
-        layout="@layout/include_toolbar" />
+    <LinearLayout
+        android:id="@+id/ll_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.hacknife.immersive.StatusView
+            android:background="@color/ip_color_primary_dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include layout="@layout/include_toolbar" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/bottom_bar"

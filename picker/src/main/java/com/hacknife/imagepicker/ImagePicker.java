@@ -121,46 +121,6 @@ public class ImagePicker {
         return shareView;
     }
 
-    public void startImagePicker(Activity activity, Class<?> clazz, ArrayList<ImageItem> images) {
-        if (onImageSelectedListener == null) {
-            Log.e(TAG, "\n\n\nOnImageSelectedListener is null , will not return any data\n\n\n");
-        }
-        Intent intent = new Intent(activity, clazz);
-        if (images != null) {
-            intent.putParcelableArrayListExtra(ImageGridActivity.EXTRAS_IMAGES, images);
-            ImagePicker.getInstance().selectedImages(images);
-        }
-        activity.startActivityForResult(intent, 100);
-    }
-
-
-    public void startVideoPicker(Activity activity, Class<?> clazz ) {
-        if (onImageSelectedListener == null) {
-            Log.e(TAG, "\n\n\nOnImageSelectedListener is null , will not return any data\n\n\n");
-        }
-        crop(false);
-        showCamera(false);
-        selectLimit(1);
-        multiMode(false);
-        loadType(MediaType.VIDEO);
-        Intent intent = new Intent(activity, clazz);
-        activity.startActivityForResult(intent, 100);
-    }
-
-    public void startImageViewer(Activity activity, List<String> images, View view, int position) {
-        if (images == null || images.size() == 0)
-            return;
-        ImagePicker.getInstance().viewerItem(images);
-        Intent intent = new Intent(activity, ImageViewerActivity.class);
-        intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
-
-        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && ImagePicker.getInstance().isShareView()) {
-            ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(view, activity.getString(R.string.share_view_photo) + position));
-            ActivityCompat.startActivity(activity, intent, option.toBundle());
-        } else {
-            activity.startActivity(intent);
-        }
-    }
 
     public boolean isMultiMode() {
         return multiMode;
@@ -350,6 +310,7 @@ public class ImagePicker {
     /**
      * 拍照的方法
      */
+    @Deprecated
     public void takePicture(Activity activity, int requestCode) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -437,7 +398,6 @@ public class ImagePicker {
     public void saveInstanceState(Bundle outState) {
         outState.putSerializable("cropCacheFolder", cropCacheFolder);
         outState.putSerializable("takeImageFile", takeImageFile);
-        outState.putParcelable("imageLoader", imageLoader);
         outState.putSerializable("style", style);
         outState.putBoolean("multiMode", multiMode);
         outState.putBoolean("crop", crop);
@@ -476,12 +436,67 @@ public class ImagePicker {
         if (onImageSelectedListener == null) {
             Log.e(TAG, "\n\n\nOnImageSelectedListener is null , will not return any data\n\n\n");
         }
+        multiMode(false);
         ImagePicker.getInstance().selectLimit(1);
         Intent intent = new Intent(activity, clazz);
         intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
         activity.startActivityForResult(intent, 100);
     }
 
+    public void startPhotoPicker(Activity activity) {
+
+        startPhotoPicker(activity, ImageGridActivity.class);
+    }
+
+
+    public void startImagePicker(Activity activity, Class<?> clazz, ArrayList<ImageItem> images) {
+        if (onImageSelectedListener == null) {
+            Log.e(TAG, "\n\n\nOnImageSelectedListener is null , will not return any data\n\n\n");
+        }
+        Intent intent = new Intent(activity, clazz);
+        if (images != null) {
+            intent.putParcelableArrayListExtra(ImageGridActivity.EXTRAS_IMAGES, images);
+            ImagePicker.getInstance().selectedImages(images);
+        }
+        loadType(MediaType.IMAGE);
+        activity.startActivityForResult(intent, 100);
+    }
+
+    public void startImagePicker(Activity activity, ArrayList<ImageItem> images) {
+        startImagePicker(activity, ImageGridActivity.class, images);
+    }
+
+    public void startVideoPicker(Activity activity, Class<?> clazz) {
+        if (onImageSelectedListener == null) {
+            Log.e(TAG, "\n\n\nOnImageSelectedListener is null , will not return any data\n\n\n");
+        }
+        crop(false);
+        showCamera(false);
+        selectLimit(1);
+        multiMode(false);
+        loadType(MediaType.VIDEO);
+        Intent intent = new Intent(activity, clazz);
+        activity.startActivityForResult(intent, 100);
+    }
+
+    public void startVideoPicker(Activity activity) {
+        startVideoPicker(activity, ImageGridActivity.class);
+    }
+
+    public void startImageViewer(Activity activity, List<String> images, View view, int position) {
+        if (images == null || images.size() == 0)
+            return;
+        ImagePicker.getInstance().viewerItem(images);
+        Intent intent = new Intent(activity, ImageViewerActivity.class);
+        intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
+
+        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && ImagePicker.getInstance().isShareView()) {
+            ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(view, activity.getString(R.string.share_view_photo) + position));
+            ActivityCompat.startActivity(activity, intent, option.toBundle());
+        } else {
+            activity.startActivity(intent);
+        }
+    }
 
     public List<String> getViewerItem() {
         return viewerItem;
@@ -494,6 +509,7 @@ public class ImagePicker {
     public MediaType getLoadType() {
         return loadType;
     }
+
 
     public interface OnPictureSelectedListener {
         void onImageSelected(int position, ImageItem item, boolean isAdd);

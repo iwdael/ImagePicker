@@ -10,15 +10,16 @@ import android.widget.ImageView;
  * github  : http://github.com/hacknife
  * project : ImagePicker
  */
-public interface ImageLoader extends Parcelable {
+public interface ImageLoader {
 
-    void displayImage(Activity activity, String path, ImageView imageView, int width, int height);
 
-    void displayImagePreview(Activity activity, String path, ImageView imageView, int width, int height);
+    void displayFileImage(ImageView imageView, String path);
 
-    void displayImage(String path, ImageView imageView);
+    void displayNetImage(ImageView imageView, String path);
 
-    void clearMemoryCache();
+    void displayFullImage(ImageView imageView, String path);
+
+    void displayFileVideo(String path);
 
 
 }

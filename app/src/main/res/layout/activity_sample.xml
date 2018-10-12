@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SampleActivity"
+    tools:ignore="MissingPrefix">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="50dp">
+
+        <Button
+            android:id="@+id/btn_take_photo"
+            style="@style/common_button"
+            android:text="拍照"
+            app:click="onTakePhotoClick();" />
+
+        <Button
+            android:id="@+id/btn_take_photo_crop"
+            style="@style/common_button"
+            android:text="拍照并裁剪"
+            app:click="onTakePhotoCropClick();" />
+
+        <Button
+            android:id="@+id/btn_picker_single_picture"
+            style="@style/common_button"
+            android:text="选择单张图片"
+            app:click="onPickerSinglePhotoClick();" />
+
+        <Button
+            android:id="@+id/btn_picker_mutil_picture"
+            style="@style/common_button"
+            android:text="选择多张图片"
+            app:click="onPickerMultiPhotoClick();" />
+
+        <Button
+            android:id="@+id/btn_picker_video"
+            style="@style/common_button"
+            android:text="选择视频"
+            app:click="onPickerVideoClick();" />
+
+
+        <Button
+            android:id="@+id/btn_nine_picture"
+            style="@style/common_button"
+            android:text="九图"
+            app:click="onNinePictureClick();" />
+    </LinearLayout>
+</ScrollView>

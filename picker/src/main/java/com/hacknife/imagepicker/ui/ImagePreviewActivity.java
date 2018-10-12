@@ -1,5 +1,9 @@
 package com.hacknife.imagepicker.ui;
 
+import com.hacknife.imagepicker.R;
+
+
+
 /**
  * author  : Hacknife
  * e-mail  : 4884280@qq.com
@@ -9,12 +13,12 @@ package com.hacknife.imagepicker.ui;
 public class ImagePreviewActivity extends AbstractImagePreviewActivity {
     @Override
     protected int attachImmersiveColorRes() {
-        return com.hacknife.imagepicker.R.color.ip_color_primary_dark;
+        return R.color.ip_color_primary_dark;
     }
 
     @Override
     protected int attachTopBarRes() {
-        return com.hacknife.imagepicker.R.id.top_bar;
+        return R.id.ll_top_bar;
     }
 
     @Override
@@ -24,54 +28,55 @@ public class ImagePreviewActivity extends AbstractImagePreviewActivity {
 
     @Override
     protected int attachLayoutRes() {
-        return com.hacknife.imagepicker.R.layout.activity_image_preview;
+        return R.layout.activity_image_preview;
     }
 
     @Override
     protected int attachViewPagerRes() {
-        return com.hacknife.imagepicker.R.id.viewpager;
+        return R.id.viewpager;
     }
 
     @Override
     protected int attachBottomViewRes() {
-        return com.hacknife.imagepicker.R.id.view_bottom;
+        return R.id.view_bottom;
     }
 
     @Override
     protected int attachCheckOriginRes() {
-        return com.hacknife.imagepicker.R.id.cb_origin;
+        return R.id.cb_origin;
     }
 
     @Override
     protected int attachCheckRes() {
-        return com.hacknife.imagepicker.R.id.cb_check;
+        return R.id.cb_check;
     }
 
     @Override
     protected int attachTitleRes() {
-        return com.hacknife.imagepicker.R.id.tv_title;
+        return R.id.tv_title;
     }
 
     @Override
     protected int attachBottomBarRes() {
-        return com.hacknife.imagepicker.R.id.bottom_bar;
+        return R.id.bottom_bar;
     }
 
     @Override
     protected int attachButtonOkRes() {
-        return com.hacknife.imagepicker.R.id.btn_ok;
+        return R.id.btn_ok;
     }
 
     @Override
     protected int attachButtonBackRes() {
-        return com.hacknife.imagepicker.R.id.iv_back;
+        return R.id.iv_back;
     }
 
     @Override
     protected int attachImmersiveColorRes(boolean show) {
         if (show)
-            return com.hacknife.imagepicker.R.color.ip_color_primary_dark;
+            return R.color.ip_color_primary_dark;
         else
-            return com.hacknife.imagepicker.R.color.translucent;
+            return R.color.ip_color_primary_dark;
     }
+
 }

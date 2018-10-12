@@ -3,6 +3,7 @@
     package="com.hacknife.demoimagepicker">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,16 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.hacknife.demoimagepicker.MainActivity">
+        <activity android:name=".SampleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.hacknife.demoimagepicker.GridActivity" />
-        <activity android:name="com.hacknife.demoimagepicker.PreviewActivity" />
-        <activity android:name="com.hacknife.demoimagepicker.CropActivity"></activity>
+        <activity android:name=".SampleNineActivity"></activity>
     </application>
 
 </manifest>

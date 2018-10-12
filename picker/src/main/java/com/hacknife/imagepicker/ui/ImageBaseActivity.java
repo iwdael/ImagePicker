@@ -23,7 +23,6 @@ public abstract class ImageBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Immersive.setContentView(this, attachLayoutRes(), attachImmersiveColorRes(), attachImmersiveColorRes(), attachStatusEmbed(), attachNavigationEmbed());
     }
 

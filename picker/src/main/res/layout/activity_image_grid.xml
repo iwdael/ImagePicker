@@ -1,28 +1,25 @@
-<LinearLayout android:id="@+id/content"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#000"
-              android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
 
-    <include
-
-        layout="@layout/include_toolbar"/>
+    <include layout="@layout/include_toolbar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#111111">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rc_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="50dp"
             android:paddingLeft="2dp"
+            android:paddingTop="2dp"
             android:paddingRight="2dp"
-            android:paddingTop="2dp"/>
+            android:paddingBottom="50dp" />
 
         <RelativeLayout
             android:id="@+id/footer_bar"
@@ -49,16 +46,16 @@
                     android:maxLines="1"
                     android:text="@string/ip_all_images"
                     android:textColor="#CFCFCF"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/tv_dir"
-                    android:layout_marginBottom="2dp"
                     android:layout_marginLeft="4dp"
+                    android:layout_marginBottom="2dp"
                     android:layout_toRightOf="@id/tv_dir"
-                    android:src="@mipmap/text_indicator"/>
+                    android:src="@mipmap/text_indicator" />
 
             </RelativeLayout>
 
@@ -75,7 +72,7 @@
                 android:text="预览(3)"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
         </RelativeLayout>
     </RelativeLayout>

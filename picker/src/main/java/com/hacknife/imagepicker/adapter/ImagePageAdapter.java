@@ -68,10 +68,11 @@ public class ImagePageAdapter extends PagerAdapter {
         PhotoView photoView = new PhotoView(mActivity);
 
         String image = images.get(position);
+
         if (mIsFromViewr)
-            imagePicker.getImageLoader().displayImagePreview(mActivity, image, photoView, Utils.getScreenPix(mActivity).widthPixels, -1);
+            imagePicker.getImageLoader().displayNetImage(photoView, image);
         else
-            imagePicker.getImageLoader().displayImage(image, photoView);
+            imagePicker.getImageLoader().displayFileImage(photoView, image);
         photoView.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override
             public void onPhotoTap(ImageView view, float x, float y) {

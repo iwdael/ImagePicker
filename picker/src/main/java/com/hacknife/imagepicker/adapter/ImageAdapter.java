@@ -47,6 +47,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     Activity activity;
     int exitPosition;
     int enterPosition;
+    RecyclerView recyclerView;
 
     @SuppressLint("NewApi")
     public ImageAdapter(Activity activity) {
@@ -64,7 +65,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(ImageViewHolder holder, final int position) {
-        ImagePicker.getInstance().getImageLoader().displayImagePreview(activity, data.get(position),   holder.imageView, Utils.getScreenPix(activity).widthPixels, -1);
+        ImagePicker.getInstance().getImageLoader().displayNetImage(holder.imageView, data.get(position));
         holder.imageView.setOnClickListener(new View.OnClickListener() {
 
             @SuppressLint("NewApi")
@@ -108,6 +109,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             computeImageSize(activity, interval, marginLeft, marginRight, list.size());
             data.clear();
             data.addAll(list);
+            resetLayoutManager();
             notifyDataSetChanged();
         }
     }
@@ -171,13 +173,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     }
 
     public void setRecyclerView(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(getManager());
-        recyclerView.setAdapter(this);
-        ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
-        ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) layoutParams;
-        marginLayoutParams.setMargins(40, 0, 40, 0);
+        this.recyclerView = recyclerView;
+
     }
 
+    private void resetLayoutManager() {
+        recyclerView.setLayoutManager(getManager());
+        recyclerView.setAdapter(this);
+    }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;

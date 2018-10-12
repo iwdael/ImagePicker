@@ -265,7 +265,7 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
 
     @Override
     protected boolean attachStatusEmbed() {
-        return false;
+        return true;
     }
 
     @Override
@@ -303,7 +303,6 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
             bottom_bar.setVisibility(View.GONE);
             Immersive.setNavigationBarColorRes(this,  attachImmersiveColorRes(false));
             Immersive.setStatusBarColorRes(this,  attachImmersiveColorRes(false));
-            Log.i("TAG", "onImageSingleTap: false");
         } else {
             top_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.top_in));
             bottom_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
@@ -311,8 +310,7 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
             bottom_bar.setVisibility(View.VISIBLE);
             Immersive.setNavigationBarColorRes(this, attachImmersiveColorRes(true));
             Immersive.setStatusBarColorRes(this,  attachImmersiveColorRes(true));
-            Log.i("TAG", "onImageSingleTap: true");
-        }
+         }
     }
 
     protected abstract int attachImmersiveColorRes(boolean show);
