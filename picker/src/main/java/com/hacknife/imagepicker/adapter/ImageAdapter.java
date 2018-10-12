@@ -31,6 +31,7 @@ import static android.app.Activity.RESULT_OK;
  * e-mail  : 4884280@qq.com
  * github  : http://github.com/hacknife
  * project : ImagePicker
+ * 单独提供的适配器
  */
 public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -181,7 +182,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             super(itemView);
             ViewGroup.MarginLayoutParams layoutParams;
             if (column == 1)
-                layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize);
+                layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             else
                 layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize);
             layoutParams.setMargins(interval / 2, interval / 2, interval / 2, interval / 2);

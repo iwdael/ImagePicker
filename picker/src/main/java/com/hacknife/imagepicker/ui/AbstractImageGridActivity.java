@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.hacknife.imagepicker.DataHolder;
 import com.hacknife.imagepicker.ImageDataSource;
 import com.hacknife.imagepicker.ImagePicker;
+import com.hacknife.imagepicker.MediaType;
 import com.hacknife.imagepicker.R;
 import com.hacknife.imagepicker.adapter.ImageFolderAdapter;
 import com.hacknife.imagepicker.adapter.ImageRecyclerAdapter;
@@ -190,8 +191,8 @@ public abstract class AbstractImageGridActivity extends ImageBaseActivity implem
             btn_ok.setVisibility(View.GONE);
             tv_preview.setVisibility(View.GONE);
         }
-        tv_dir.setText(attachDirectoryName(imagePicker.getLoadType() == ImageDataSource.LOADER_TYPE_IAMGE));
-        tv_title.setText(attachTitleName(imagePicker.getLoadType() == ImageDataSource.LOADER_TYPE_IAMGE));
+        tv_dir.setText(attachDirectoryName(imagePicker.getLoadType() == MediaType.IMAGE));
+        tv_title.setText(attachTitleName(imagePicker.getLoadType() == MediaType.IMAGE));
     }
 
     @Override

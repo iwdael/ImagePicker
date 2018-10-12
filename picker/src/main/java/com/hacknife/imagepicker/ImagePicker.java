@@ -75,7 +75,7 @@ public class ImagePicker {
     private List<OnPictureSelectedListener> mImageSelectedListeners;          // 图片选中的监听回调
     private OnSelectedListener onImageSelectedListener;
     private boolean shareView = true;
-    private int loadType = ImageDataSource.LOADER_TYPE_IAMGE;
+    private MediaType loadType = MediaType.IMAGE;
 
     private List<String> viewerItem;
 
@@ -118,7 +118,6 @@ public class ImagePicker {
     }
 
     public boolean isShareView() {
-
         return shareView;
     }
 
@@ -143,7 +142,7 @@ public class ImagePicker {
         showCamera(false);
         selectLimit(1);
         multiMode(false);
-        loadType(ImageDataSource.LOADER_TYPE_VIDEO);
+        loadType(MediaType.VIDEO);
         Intent intent = new Intent(activity, clazz);
         activity.startActivityForResult(intent, 100);
     }
@@ -190,7 +189,7 @@ public class ImagePicker {
         return this;
     }
 
-    public ImagePicker loadType(int loadType) {
+    public ImagePicker loadType(MediaType loadType) {
         this.loadType = loadType;
         return this;
     }
@@ -492,7 +491,7 @@ public class ImagePicker {
         viewerItem = data;
     }
 
-    public int getLoadType() {
+    public MediaType getLoadType() {
         return loadType;
     }
 

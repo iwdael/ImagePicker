@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hacknife.imagepicker.ImagePicker;
+import com.hacknife.imagepicker.MediaType;
 import com.hacknife.imagepicker.R;
 import com.hacknife.imagepicker.bean.ImageItem;
 import com.hacknife.imagepicker.ui.ImageBaseActivity;
@@ -28,13 +29,14 @@ import java.util.ArrayList;
  * e-mail  : 4884280@qq.com
  * github  : http://github.com/hacknife
  * project : ImagePicker
+ * 浏览器中的适配器
  */
 public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final String TAG = ImageRecyclerAdapter.class.getName();
     private static final int ITEM_TYPE_CAMERA = 0;  //第一个条目是相机
     private static final int ITEM_TYPE_NORMAL = 1;  //第一个条目不是相机
-    private final int loadType;
+    private final MediaType loadType;
     private ImagePicker imagePicker;
     private Activity mActivity;
     private ArrayList<ImageItem> images;       //当前需要显示的所有的图片数据
@@ -47,7 +49,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     /**
      * 构造方法
      */
-    public ImageRecyclerAdapter(Activity activity, int loadType) {
+    public ImageRecyclerAdapter(Activity activity, MediaType loadType) {
         images = new ArrayList<>();
         mActivity = activity;
         mImageSize = Utils.getImageItemWidth(mActivity);
@@ -139,7 +141,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             checkView = itemView.findViewById(R.id.checkView);
             cbCheck = (SuperCheckBox) itemView.findViewById(R.id.cb_check);
             ivPlay = itemView.findViewById(R.id.iv_play);
-            if (loadType == ImageDataSource.LOADER_TYPE_VIDEO)
+            if (loadType == MediaType.VIDEO)
                 ivPlay.setVisibility(View.VISIBLE);
             itemView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize)); //让图片是个正方形
         }

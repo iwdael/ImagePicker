@@ -26,8 +26,6 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final int LOADER_ALL = 0;         //加载所有图片
     public static final int LOADER_CATEGORY = 1;    //分类加载图片
-    public static final int LOADER_TYPE_IAMGE = 100;
-    public static final int LOADER_TYPE_VIDEO = 101;
     private final String[] IMAGE_PROJECTION = {
             //查询图片需要的数据列
             MediaStore.Images.Media.DISPLAY_NAME,   //图片的显示名称  aaa.jpg
@@ -56,10 +54,10 @@ public class ImageDataSource implements LoaderManager.LoaderCallbacks<Cursor> {
     private Uri uri;
     private int mainDirNameRes;
 
-    public ImageDataSource(FragmentActivity activity, String path, int loadType, OnImagesLoadedListener loadedListener) {
+    public ImageDataSource(FragmentActivity activity, String path, MediaType loadType, OnImagesLoadedListener loadedListener) {
         this.activity = activity;
         this.loadedListener = loadedListener;
-        if (loadType == LOADER_TYPE_IAMGE) {
+        if (loadType == MediaType.IMAGE) {
             projections = IMAGE_PROJECTION;
             uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
             mainDirNameRes=R.string.ip_all_images;
