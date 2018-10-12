@@ -11,9 +11,11 @@ import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.hacknife.imagepicker.ImagePicker;
 import com.hacknife.imagepicker.R;
@@ -57,7 +59,7 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ImageViewHolder(new ImageView(parent.getContext()));
+        return new ImageViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image_viewer, null));
     }
 
     @Override
@@ -180,17 +182,19 @@ public class ImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public class ImageViewHolder extends RecyclerView.ViewHolder {
         public ImageViewHolder(View itemView) {
             super(itemView);
-            ViewGroup.MarginLayoutParams layoutParams;
+            ImageView imageView = itemView.findViewById(R.id.iv_cover);
+
+            LinearLayout.MarginLayoutParams layoutParams;
             if (column == 1)
-                layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams = new LinearLayout.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             else
-                layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize);
+                layoutParams = new LinearLayout.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize);
             layoutParams.setMargins(interval / 2, interval / 2, interval / 2, interval / 2);
             itemView.setLayoutParams(layoutParams);
             if (column == 1)
-                ((ImageView) itemView).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             else
-                ((ImageView) itemView).setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
     }
 }
