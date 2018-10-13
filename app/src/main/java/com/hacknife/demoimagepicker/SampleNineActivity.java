@@ -14,14 +14,14 @@ import java.util.List;
 @BindLayout(R.layout.activity_sample_nine)
 public class SampleNineActivity extends AppCompatActivity {
     SampleNineActivityBriefnessor briefnessor;
-      ImageAdapter imageAdapter;
+    ImageAdapter imageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample_nine);
         briefnessor = (SampleNineActivityBriefnessor) Briefness.bind(this);
-          imageAdapter = new ImageAdapter(this);
+        imageAdapter = new ImageAdapter(this);
         imageAdapter.setRecyclerView(briefnessor.rc_view);
         imageAdapter.setImageSize(20, 0, 0);
         List<String> list = new ArrayList<>();
