@@ -444,7 +444,6 @@ public class ImagePicker {
     }
 
     public void startPhotoPicker(Activity activity) {
-
         startPhotoPicker(activity, ImageGridActivity.class);
     }
 

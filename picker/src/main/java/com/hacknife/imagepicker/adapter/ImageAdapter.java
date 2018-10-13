@@ -191,7 +191,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
             LinearLayout.MarginLayoutParams layoutParams;
             if (column == 1)
-                layoutParams = new LinearLayout.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams = new LinearLayout.MarginLayoutParams((int) (mImageSize * (2 / 3.0f)), mImageSize);
             else
                 layoutParams = new LinearLayout.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize);
             layoutParams.setMargins(interval / 2, interval / 2, interval / 2, interval / 2);
