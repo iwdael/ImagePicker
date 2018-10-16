@@ -72,7 +72,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             @Override
             public void onClick(View v) {
                 enterPosition = position;
-                Intent intent = new Intent(activity, ImageViewerActivity.class);
+                Intent intent = new Intent(activity, ImagePicker.getInstance().getImageLoader().displayFullImageClass() == null ? ImageViewerActivity.class : ImagePicker.getInstance().getImageLoader().displayFullImageClass());
                 intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
                 ImagePicker.getInstance().viewerItem(data);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ImagePicker.getInstance().isShareView()) {
@@ -191,7 +191,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
             LinearLayout.MarginLayoutParams layoutParams;
             if (column == 1)
-                layoutParams = new LinearLayout.MarginLayoutParams((int) (mImageSize * (2 / 3.0f)),(int) (mImageSize * (2 / 3.0f)) );
+                layoutParams = new LinearLayout.MarginLayoutParams((int) (mImageSize * (2 / 3.0f)), (int) (mImageSize * (2 / 3.0f)));
             else
                 layoutParams = new LinearLayout.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mImageSize);
             layoutParams.setMargins(interval / 2, interval / 2, interval / 2, interval / 2);

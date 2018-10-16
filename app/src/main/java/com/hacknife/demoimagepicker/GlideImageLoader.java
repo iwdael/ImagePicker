@@ -44,4 +44,9 @@ public class GlideImageLoader implements ImageLoader {
     public void displayFileVideo(String path) {
 
     }
+
+    @Override
+    public Class<?> displayFullImageClass() {
+        return null;
+    }
 }

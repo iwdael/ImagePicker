@@ -22,4 +22,5 @@ public interface ImageLoader {
     void displayFileVideo(String path);
 
 
+    Class<?> displayFullImageClass();
 }

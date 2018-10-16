@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.SharedElementCallback;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hacknife.imagepicker.ImagePicker;
@@ -25,6 +26,7 @@ public class ImageViewerActivity extends ImageBaseActivity {
     ImagePageAdapter mAdapter;
     boolean isMultiPhoto = false;
     TextView indicator;
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +52,15 @@ public class ImageViewerActivity extends ImageBaseActivity {
             isMultiPhoto = true;
         viewpager = findViewById(R.id.viewpager);
         indicator = findViewById(R.id.indicator);
+        back = findViewById(R.id.iv_back);
         if (!isMultiPhoto)
             indicator.setVisibility(View.GONE);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
