@@ -489,12 +489,16 @@ public class ImagePicker {
         Intent intent = new Intent(activity, ImageViewerActivity.class);
         intent.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
 
-        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && ImagePicker.getInstance().isShareView()) {
+        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP && ImagePicker.getInstance().isShareView() && view != null) {
             ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(view, activity.getString(R.string.share_view_photo) + position));
             ActivityCompat.startActivity(activity, intent, option.toBundle());
         } else {
             activity.startActivity(intent);
         }
+    }
+
+    public void startImageViewer(Activity activity, List<String> images) {
+        startImageViewer(activity, images, null, 0);
     }
 
     public List<String> getViewerItem() {
