@@ -65,7 +65,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(ImageViewHolder holder, final int position) {
-        ImagePicker.getInstance().getImageLoader().displayNetImage(holder.imageView, data.get(position));
+        ImagePicker.getInstance().getImageLoader().displayUserImage(holder.imageView, data.get(position));
         holder.imageView.setOnClickListener(new View.OnClickListener() {
 
             @SuppressLint("NewApi")
@@ -155,7 +155,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void setExitSharedElementCallback() {
+    private void setExitSharedElementCallback() {
 
         activity.setExitSharedElementCallback(new android.app.SharedElementCallback() {
             @Override

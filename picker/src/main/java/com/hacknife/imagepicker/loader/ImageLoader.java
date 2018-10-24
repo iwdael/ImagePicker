@@ -15,9 +15,7 @@ public interface ImageLoader {
 
     void displayFileImage(ImageView imageView, String path);
 
-    void displayNetImage(ImageView imageView, String path);
-
-    void displayFullImage(ImageView imageView, String path);
+    void displayUserImage(ImageView imageView, String path);
 
     void displayFileVideo(String path);
 

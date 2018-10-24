@@ -70,7 +70,7 @@ public class ImagePageAdapter extends PagerAdapter {
         String image = images.get(position);
 
         if (mIsFromViewr)
-            imagePicker.getImageLoader().displayNetImage(photoView, image);
+            imagePicker.getImageLoader().displayUserImage(photoView, image);
         else
             imagePicker.getImageLoader().displayFileImage(photoView, image);
         photoView.setOnPhotoTapListener(new OnPhotoTapListener() {

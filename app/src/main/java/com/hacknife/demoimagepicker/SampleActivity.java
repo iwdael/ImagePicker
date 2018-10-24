@@ -10,6 +10,7 @@ import com.hacknife.briefness.Briefness;
 import com.hacknife.imagepicker.ImagePicker;
 import com.hacknife.imagepicker.bean.ImageItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @BindLayout(R.layout.activity_sample)
@@ -102,7 +103,18 @@ public class SampleActivity extends AppCompatActivity {
     }
 
     public void onNinePictureClick() {
-        Intent intent = new Intent(this, SampleNineActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, SampleNineActivity.class);
+//        startActivity(intent);
+        List<String> list = new ArrayList<>();
+        list.add("http://dpic.tiankong.com/8n/a0/QJ6177688033.jpg");
+        list.add("http://dpic.tiankong.com/6j/s5/QJ6146491299.jpg");
+        list.add("http://dpic.tiankong.com/zt/pz/QJ6519443181.jpg");
+        list.add("http://dpic.tiankong.com/br/ja/QJ6223394486.jpg");
+        list.add("http://dpic.tiankong.com/i6/ke/QJ6322734186.jpg");
+        list.add("http://dpic.tiankong.com/cl/at/QJ6769314375.jpg");
+        list.add("http://dpic.tiankong.com/xp/3t/QJ6230352510.jpg");
+        list.add("http://dpic.tiankong.com/37/ha/QJ6534800776.jpg");
+        list.add("http://dpic.tiankong.com/5p/33/QJ6215180920.jpg");
+        ImagePicker.getInstance().startImageViewer(this, list);
     }
 }
