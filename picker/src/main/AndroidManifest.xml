@@ -25,7 +25,7 @@
 
         <provider
             android:name="com.hacknife.imagepicker.ImagePickerProvider"
-            android:authorities="${applicationId}.provider"
+            android:authorities="${applicationId}.ImagePickerFileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

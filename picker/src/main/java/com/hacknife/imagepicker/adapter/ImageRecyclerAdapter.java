@@ -20,7 +20,6 @@ import com.hacknife.imagepicker.ui.ImageBaseActivity;
 import com.hacknife.imagepicker.ui.ImageGridActivity;
 import com.hacknife.imagepicker.util.Utils;
 import com.hacknife.imagepicker.view.SuperCheckBox;
-import com.hacknife.imagepicker.ImageDataSource;
 
 import java.util.ArrayList;
 
@@ -81,9 +80,9 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == ITEM_TYPE_CAMERA) {
-            return new CameraViewHolder(mInflater.inflate(R.layout.item_camera, parent, false));
+            return new CameraViewHolder(mInflater.inflate(R.layout.imagepicker_item_camera, parent, false));
         }
-        return new ImageViewHolder(mInflater.inflate(R.layout.item_image, parent, false));
+        return new ImageViewHolder(mInflater.inflate(R.layout.imagepicker_item_image, parent, false));
     }
 
     @Override

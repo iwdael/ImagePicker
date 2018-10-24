@@ -33,7 +33,7 @@ public class FolderPopUpWindow extends PopupWindow implements View.OnClickListen
     public FolderPopUpWindow(Context context, BaseAdapter adapter) {
         super(context);
 
-        final View view = View.inflate(context, com.hacknife.imagepicker.R.layout.pop_folder, null);
+        final View view = View.inflate(context, com.hacknife.imagepicker.R.layout.imagepicker_pop_folder, null);
         masker = view.findViewById(com.hacknife.imagepicker.R.id.masker);
         masker.setOnClickListener(this);
         marginView = view.findViewById(com.hacknife.imagepicker.R.id.margin);

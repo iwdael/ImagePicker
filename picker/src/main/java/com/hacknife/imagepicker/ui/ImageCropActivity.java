@@ -44,6 +44,6 @@ public class ImageCropActivity extends AbstractImageCropActivity {
 
     @Override
     protected int attachLayoutRes() {
-        return com.hacknife.imagepicker.R.layout.activity_image_crop;
+        return com.hacknife.imagepicker.R.layout.imagepicker_activity_image_crop;
     }
 }

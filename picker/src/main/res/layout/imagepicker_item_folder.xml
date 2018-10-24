@@ -55,6 +55,6 @@
         android:layout_height="24dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="20dp"
-        app:srcCompat="@drawable/ic_vector_check" />
+        app:srcCompat="@drawable/imagepicker_ic_vector_check" />
 
 </LinearLayout>

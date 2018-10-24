@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/selector_back_press"
             android:padding="7dp"
-            app:srcCompat="@drawable/ic_arrow_back" />
+            app:srcCompat="@drawable/imagepicker_ic_arrow_back" />
 
     </LinearLayout>
 

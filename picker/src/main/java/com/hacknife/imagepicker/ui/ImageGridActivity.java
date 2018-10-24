@@ -26,7 +26,7 @@ public class ImageGridActivity extends AbstractImageGridActivity {
 
     @Override
     protected int attachLayoutRes() {
-        return R.layout.activity_image_grid;
+        return R.layout.imagepicker_activity_image_grid;
     }
 
     @Override

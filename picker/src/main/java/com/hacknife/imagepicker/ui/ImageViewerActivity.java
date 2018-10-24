@@ -83,7 +83,7 @@ public class ImageViewerActivity extends ImageBaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();
         }
-        return R.layout.activity_image_viewer;
+        return R.layout.imagepicker_activity_image_viewer;
     }
 
     private void initViewPager() {

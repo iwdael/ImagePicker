@@ -28,7 +28,7 @@ public class ImagePreviewActivity extends AbstractImagePreviewActivity {
 
     @Override
     protected int attachLayoutRes() {
-        return R.layout.activity_image_preview;
+        return R.layout.imagepicker_activity_image_preview;
     }
 
     @Override

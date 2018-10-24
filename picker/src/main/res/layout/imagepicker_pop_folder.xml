@@ -20,7 +20,7 @@
             android:layout_gravity="bottom"
             android:dividerHeight="1px"
             android:background="@android:color/white"
-            tools:listitem="@layout/item_folder"/>
+            tools:listitem="@layout/imagepicker_item_folder"/>
     </FrameLayout>
 
     <View
