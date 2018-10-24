@@ -9,12 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_default_image" />
+        android:src="@drawable/imagepicker_ic_default_image" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_cover_shade" />
+        android:background="@drawable/imagepicker_ic_cover_shade" />
 
     <View
         android:id="@+id/mask"
@@ -51,6 +51,6 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:src="@drawable/ic_play"
+        android:src="@drawable/imagepicker_ic_play"
         android:visibility="gone" />
 </FrameLayout>

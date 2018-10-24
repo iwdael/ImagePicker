@@ -297,15 +297,15 @@ public abstract class AbstractImagePreviewActivity extends ImageBaseActivity imp
      */
     public void onImageSingleTap() {
         if (top_bar.getVisibility() == View.VISIBLE) {
-            top_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.top_out));
-            bottom_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
+            top_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.imagepicker_top_out));
+            bottom_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.imagepicker_fade_out));
             top_bar.setVisibility(View.GONE);
             bottom_bar.setVisibility(View.GONE);
             Immersive.setNavigationBarColorRes(this,  attachImmersiveColorRes(false));
             Immersive.setStatusBarColorRes(this,  attachImmersiveColorRes(false));
         } else {
-            top_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.top_in));
-            bottom_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+            top_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.imagepicker_top_in));
+            bottom_bar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.imagepicker_fade_in));
             top_bar.setVisibility(View.VISIBLE);
             bottom_bar.setVisibility(View.VISIBLE);
             Immersive.setNavigationBarColorRes(this, attachImmersiveColorRes(true));

@@ -4,8 +4,8 @@
         <!-- Customize your theme here. -->
 
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowSharedElementEnterTransition">@transition/change_image_transform</item>
-        <item name="android:windowSharedElementExitTransition">@transition/change_image_transform</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/imagepicker_change_image_transform</item>
+        <item name="android:windowSharedElementExitTransition">@transition/imagepicker_change_image_transform</item>
     </style>
 
     <style name="ImagePicker.Transparent" parent="ImagePicker">

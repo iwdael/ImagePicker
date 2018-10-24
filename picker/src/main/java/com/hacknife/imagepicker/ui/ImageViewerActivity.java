@@ -99,7 +99,7 @@ public class ImageViewerActivity extends ImageBaseActivity {
                         indicator.setVisibility(View.GONE);
                     } else {
 
-//                        indicator.setAnimation(AnimationUtils.loadAnimation(ImageViewerActivity.this, R.anim.fade_in));
+//                        indicator.setAnimation(AnimationUtils.loadAnimation(ImageViewerActivity.this, R.anim.imagepicker_fade_in));
                         indicator.setVisibility(View.VISIBLE);
                     }
                 }

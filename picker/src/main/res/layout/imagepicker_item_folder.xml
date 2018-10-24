@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_folder_item"
+    android:background="@drawable/imagepicker_bg_folder_item"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_image_folder"
+        android:background="@drawable/imagepicker_bg_image_folder"
         android:layout_margin="12dp">
 
         <ImageView
@@ -20,7 +20,7 @@
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_default_image" />
+            android:src="@drawable/imagepicker_ic_default_image" />
 
     </FrameLayout>
 
