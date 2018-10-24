@@ -1,1 +1,1 @@
-# ImagePicker [![](https://jitpack.io/v/hacknife/imagepicker.svg)](https://jitpack.io/#hacknife/imagepicker)
+# ImagePicker [![](https://jitpack.io/v/com.hacknife/imagepicker.svg)](https://jitpack.io/#com.hacknife/imagepicker)
