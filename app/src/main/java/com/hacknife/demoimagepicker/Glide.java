@@ -19,7 +19,7 @@ public class Glide extends AppGlideModule {
 
     @Override
     public void applyOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
-        builder.setDiskCache(new DiskLruCacheFactory("sdcard/imagepicker/", 1024 * 1024 * 100));
+        builder.setDiskCache(new DiskLruCacheFactory("/sdcard/imagepicker/", 1024 * 1024 * 100));
         super.applyOptions(context, builder);
     }
 }

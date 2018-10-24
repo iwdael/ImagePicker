@@ -497,6 +497,10 @@ public class ImagePicker {
         }
     }
 
+    public void startImageViewer(Activity activity, List<String> images, int position) {
+        startImageViewer(activity, images, null, position);
+    }
+
     public void startImageViewer(Activity activity, List<String> images) {
         startImageViewer(activity, images, null, 0);
     }
