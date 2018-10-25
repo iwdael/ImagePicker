@@ -95,11 +95,9 @@ public class ImageViewerActivity extends ImageBaseActivity {
             public void OnPhotoTapListener(View view, float v, float v1) {
                 if (isMultiPhoto) {
                     if (view.getVisibility() == View.VISIBLE) {
-//                        indicator.setAnimation(AnimationUtils.loadAnimation(ImageViewerActivity.this, R.anim.fade_out));
                         indicator.setVisibility(View.GONE);
                     } else {
 
-//                        indicator.setAnimation(AnimationUtils.loadAnimation(ImageViewerActivity.this, R.anim.imagepicker_fade_in));
                         indicator.setVisibility(View.VISIBLE);
                     }
                 }
@@ -134,7 +132,7 @@ public class ImageViewerActivity extends ImageBaseActivity {
         intent.putExtra(ImagePicker.EXTRA_EXIT_POSITION, current);
         setResult(RESULT_OK, intent);
         if (current != mPosition) {
-            View view = viewpager.findViewWithTag(getString(R.string.share_view_photo) + current);
+            View view = ((ImagePageAdapter) viewpager.getAdapter()).getCurrentView();
             setSharedElementCallback(view);
         }
         super.finishAfterTransition();

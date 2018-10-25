@@ -34,6 +34,7 @@ public class ImagePageAdapter extends PagerAdapter {
     private List<String> images = new ArrayList<>();
     private AppCompatActivity mActivity;
     private boolean mIsFromViewr = false;
+    private View currentView;
 
     public ImagePageAdapter(AppCompatActivity activity, List<String> images, int position) {
         this.mActivity = activity;
@@ -82,7 +83,6 @@ public class ImagePageAdapter extends PagerAdapter {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mIsFromViewr) {
             String name = mActivity.getString(R.string.share_view_photo) + position;
             photoView.setTransitionName(name);
-            photoView.setTag(name);
             if (position == mPosition)
                 setStartPostTransition(photoView);
         }
@@ -127,5 +127,14 @@ public class ImagePageAdapter extends PagerAdapter {
 
     public interface PhotoViewClickListener {
         void OnPhotoTapListener(View view, float v, float v1);
+    }
+
+    @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        currentView= (View) object;
+    }
+
+    public View getCurrentView() {
+        return currentView;
     }
 }

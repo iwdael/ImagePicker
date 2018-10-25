@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -60,7 +61,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ImageViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.imagepicker_item_image_viewer, null));
+        return new ImageViewHolder(new AppCompatImageView(activity));
     }
 
     @Override
@@ -187,7 +188,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.iv_cover);
+            imageView = (ImageView) itemView;
 
             LinearLayout.MarginLayoutParams layoutParams;
             if (column == 1)

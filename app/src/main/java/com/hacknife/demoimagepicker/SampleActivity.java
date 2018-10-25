@@ -103,8 +103,11 @@ public class SampleActivity extends AppCompatActivity {
     }
 
     public void onNinePictureClick() {
-//        Intent intent = new Intent(this, SampleNineActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, SampleNineActivity.class);
+        startActivity(intent);
+    }
+
+    public void onViewerClick() {
         List<String> list = new ArrayList<>();
         list.add("http://dpic.tiankong.com/8n/a0/QJ6177688033.jpg");
         list.add("http://dpic.tiankong.com/6j/s5/QJ6146491299.jpg");

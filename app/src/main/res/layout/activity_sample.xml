@@ -49,5 +49,11 @@
             style="@style/common_button"
             android:text="九图"
             app:click="onNinePictureClick();" />
+
+        <Button
+            android:id="@+id/btn_viewer"
+            style="@style/common_button"
+            android:text="图片预览"
+            app:click="onViewerClick();" />
     </LinearLayout>
 </ScrollView>
