@@ -20,7 +20,7 @@ import android.view.View;
 
 import com.hacknife.mediapicker.bean.ImageFolder;
 import com.hacknife.mediapicker.bean.ImageItem;
-import com.hacknife.mediapicker.loader.ImageLoader;
+import com.hacknife.mediapicker.loader.MediaLoader;
 import com.hacknife.mediapicker.ui.MediaGridActivity;
 import com.hacknife.mediapicker.ui.ImageViewerActivity;
 import com.hacknife.mediapicker.util.ProviderUtil;
@@ -65,7 +65,7 @@ public class MediaPicker {
     private int outPutY = 800;           //裁剪保存高度
     private int focusWidth = 280;         //焦点框的宽度
     private int focusHeight = 280;        //焦点框的高度
-    private ImageLoader imageLoader;     //图片加载器
+    private MediaLoader imageLoader;     //图片加载器
     private CropImageView.Style style = CropImageView.Style.RECTANGLE; //裁剪框的形状
     private File cropCacheFolder;
     private File takeImageFile;
@@ -225,11 +225,11 @@ public class MediaPicker {
         return this;
     }
 
-    public ImageLoader getImageLoader() {
+    public MediaLoader getImageLoader() {
         return imageLoader;
     }
 
-    public MediaPicker imageLoader(ImageLoader imageLoader) {
+    public MediaPicker imageLoader(MediaLoader imageLoader) {
         this.imageLoader = imageLoader;
         return this;
     }

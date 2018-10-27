@@ -104,7 +104,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     public void bindData(List<String> list) {
         if (MediaPicker.getInstance().getImageLoader() == null) {
-            throw new RuntimeException("ImageLoader is null !");
+            throw new RuntimeException("MediaLoader is null !");
         }
         if (list != null) {
             computeImageSize(activity, interval, marginLeft, marginRight, list.size());

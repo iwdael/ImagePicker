@@ -3,7 +3,7 @@ package com.hacknife.demoimagepicker;
 import android.net.Uri;
 import android.widget.ImageView;
 
-import com.hacknife.mediapicker.loader.ImageLoader;
+import com.hacknife.mediapicker.loader.MediaLoader;
 
 import java.io.File;
 
@@ -13,7 +13,7 @@ import java.io.File;
  * github  : http://github.com/hacknife
  * project : MediaPicker
  */
-public class GlideImageLoader implements ImageLoader {
+public class GlideMediaLoader implements MediaLoader {
     @Override
     public void displayFileImage(ImageView imageView, String path) {
          GlideApp.with(imageView.getContext())                             //配置上下文

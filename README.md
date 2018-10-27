@@ -13,6 +13,34 @@
     }
 
 ```
+其次实现MediaLoader，并设置到MediaPicker.getInstance().imageLoader(new GlideMediaLoader())
+···
+public class GlideMediaLoader implements MediaLoader {
+    @Override
+    public void displayFileImage(ImageView imageView, String path) {
+         GlideApp.with(imageView.getContext())                             //配置上下文
+                .load(Uri.fromFile(new File(path)))      //设置图片路径(fix #8,文件名包含%符号 无法识别和显示)
+                .into(imageView);
+    }
+
+    @Override
+    public void displayUserImage(ImageView imageView, String path) {
+         GlideApp.with(imageView.getContext()).load(path).into(imageView);
+    }
+
+
+    @Override
+    public void displayFileVideo(String path) {
+
+    }
+
+    @Override
+    public Class<?> displayFullImageClass() {
+        return null;
+    }
+}
+
+···
 ### 功能
 
 #### 拍照
@@ -145,3 +173,28 @@ public class SampleNineActivity extends AppCompatActivity {
                 })
                 .startVideoPicker(this);
 ```
+## 如何配置
+将本仓库引入你的项目:
+### Step 1. 添加仓库到Build文件
+合并以下代码到项目根目录下的build.gradle文件的repositories尾。[点击查看详情](https://github.com/hacknife/CarouselBanner/blob/master/root_build.gradle.png)
+```Java
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://hacknife.com' }
+		}
+	}
+```
+### Step 2. 添加依赖   
+合并以下代码到需要使用的application Module的dependencies尾。[点击查看详情](https://github.com/hacknife/CarouselBanner/blob/master/application_build.gradle.png)
+```Java
+	dependencies {
+            ...
+            implementation 'com.hacknife:mediapicker:1.3.0-alpha2'
+	}
+```
+<br><br><br>
+## 感谢浏览
+如果你有任何疑问，请加入QQ群，我将竭诚为你解答。欢迎Star和Fork本仓库，当然也欢迎你关注我。
+<br>
+![Image Text](https://github.com/hacknife/CarouselBanner/blob/master/qq_group.png)

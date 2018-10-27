@@ -8,7 +8,7 @@ import android.widget.ImageView;
  * github  : http://github.com/hacknife
  * project : MediaPicker
  */
-public interface ImageLoader {
+public interface MediaLoader {
 
 
     void displayFileImage(ImageView imageView, String path);

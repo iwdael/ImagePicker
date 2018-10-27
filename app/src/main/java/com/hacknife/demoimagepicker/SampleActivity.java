@@ -21,7 +21,7 @@ public class SampleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         briefnessor = (SampleActivityBriefnessor) Briefness.bind(this);
-        MediaPicker.getInstance().imageLoader(new GlideImageLoader());
+        MediaPicker.getInstance().imageLoader(new GlideMediaLoader());
     }
 
     public void onTakePhotoClick() {
