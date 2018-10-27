@@ -13,9 +13,9 @@
     }
 
 ```
+### 功能
 
-
-拍照
+#### 拍照
 ```Java
         MediaPicker.getInstance()
                 .crop(false)//是否裁剪
@@ -29,7 +29,7 @@
 ```
 
 
-拍照并裁剪
+#### 拍照并裁剪
 ```Java
         MediaPicker.getInstance()
                 .crop(true)//是否裁剪
@@ -45,7 +45,7 @@
 ```
 
 
-选择单张图片并裁剪
+#### 选择单张图片并裁剪
 ```Java
         MediaPicker.getInstance()
                 .multiMode(false)//是否多选
@@ -63,7 +63,7 @@
 ```
 
 
-选择多图
+#### 选择多图
 ```Java
         MediaPicker.getInstance()
                 .multiMode(true)//是否多选
@@ -79,7 +79,7 @@
 ```
 
 
-九图显示
+#### 九图显示
 ```Java
 @BindLayout(R.layout.activity_sample_nine)
 public class SampleNineActivity extends AppCompatActivity {
@@ -118,7 +118,7 @@ public class SampleNineActivity extends AppCompatActivity {
 ```
 
 
-图片预览(放大缩小)
+#### 图片预览(放大缩小)
 ```Java
         List<String> list = new ArrayList<>();
         list.add("http://dpic.tiankong.com/8n/a0/QJ6177688033.jpg");
@@ -134,7 +134,7 @@ public class SampleNineActivity extends AppCompatActivity {
 ```
 
 
-视频选择
+#### 视频选择
 ```Java
         MediaPicker.getInstance()
                 .selectedListener(new MediaPicker.OnSelectedListener() {
