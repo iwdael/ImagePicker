@@ -1,6 +1,6 @@
 # MediaPicker 
 [![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/hacknife/MediaPicker) [![](https://img.shields.io/badge/version-1.3.0--alpha1-brightgreen.svg)](https://github.com/hacknife/MediaPicker)<br/>
-图片选择器满足你的一切需求，单选、多选、裁剪、拍照、九图、图片预览、单击放大、一应俱全，适配到Android8.0
+图片选择器满足你的一切需求，单选、多选、裁剪、拍照、九图、图片预览、单击放大、一应俱全，适配到Android8.0。如果UI色调不符合你的项目需求，可继承AbstractXXXActivity，重写相关布局，并在MediaPicker.getInstance().startXXX()方法中传入自定义的Activity。
 <br/><br/>
 ![](https://github.com/hacknife/ImagePicker/blob/master/screenshot.gif)
 ## 代码示例
@@ -187,11 +187,11 @@ public class SampleNineActivity extends AppCompatActivity {
 	}
 ```
 ### Step 2. 添加依赖   
-合并以下代码到需要使用的application Module的dependencies尾。[点击查看详情](https://github.com/hacknife/CarouselBanner/blob/master/application_build.gradle.png)
+合并以下代码到需要使用的application Module的dependencies尾，注意替换version。[点击查看详情](https://github.com/hacknife/CarouselBanner/blob/master/application_build.gradle.png)
 ```Java
 	dependencies {
             ...
-            implementation 'com.hacknife:mediapicker:1.3.0-alpha2'
+            implementation 'com.hacknife:mediapicker:version'
 	}
 ```
 <br><br><br>
