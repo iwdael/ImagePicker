@@ -5,7 +5,7 @@
 ![](https://github.com/hacknife/ImagePicker/blob/master/screenshot.gif)
 ## 代码示例
 在使用MediaPicker前，必须在Activity中重写onActivityResult方法
-```
+```Java
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -15,7 +15,7 @@
 ```
 <br/>
 拍照
-```
+```Java
         MediaPicker.getInstance()
                 .crop(false)//是否裁剪
                 .selectedListener(new MediaPicker.OnSelectedListener() {
@@ -28,7 +28,7 @@
 ```
 <br/>
 拍照并裁剪
-```
+```Java
         MediaPicker.getInstance()
                 .crop(true)//是否裁剪
                 .outPutY(800)//裁剪大小
@@ -43,7 +43,7 @@
 ```
 <br/>
 选择单张图片并裁剪
-```
+```Java
         MediaPicker.getInstance()
                 .multiMode(false)//是否多选
                 .showCamera(true)//是否显示拍照Item
@@ -60,7 +60,7 @@
 ```
 <br/>
 选择多图
-```
+```Java
         MediaPicker.getInstance()
                 .multiMode(true)//是否多选
                 .selectLimit(8)//图片限制
@@ -75,7 +75,7 @@
 ```
 <br/>
 九图显示
-```
+```Java
 @BindLayout(R.layout.activity_sample_nine)
 public class SampleNineActivity extends AppCompatActivity {
     RecyclerView rc_view;
@@ -113,7 +113,7 @@ public class SampleNineActivity extends AppCompatActivity {
 ```
 <br/>
 图片预览(放大缩小)
-```
+```Java
         List<String> list = new ArrayList<>();
         list.add("http://dpic.tiankong.com/8n/a0/QJ6177688033.jpg");
         list.add("http://dpic.tiankong.com/6j/s5/QJ6146491299.jpg");
@@ -128,7 +128,7 @@ public class SampleNineActivity extends AppCompatActivity {
 ```
 <br/>
 视频选择
-```
+```Java
         MediaPicker.getInstance()
                 .selectedListener(new MediaPicker.OnSelectedListener() {
                     @Override
