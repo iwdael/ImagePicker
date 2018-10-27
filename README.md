@@ -13,6 +13,7 @@
     }
 
 ```
+
 其次实现MediaLoader，并设置到MediaPicker.getInstance().imageLoader(new GlideMediaLoader())
 ···
 public class GlideMediaLoader implements MediaLoader {
@@ -39,8 +40,8 @@ public class GlideMediaLoader implements MediaLoader {
         return null;
     }
 }
-
 ···
+
 ### 功能
 
 #### 拍照
