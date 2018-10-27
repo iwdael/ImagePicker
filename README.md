@@ -13,7 +13,8 @@
     }
 
 ```
-<br/>
+
+
 拍照
 ```Java
         MediaPicker.getInstance()
@@ -26,7 +27,8 @@
                 })
                 .startPhotoPicker(this);
 ```
-<br/>
+
+
 拍照并裁剪
 ```Java
         MediaPicker.getInstance()
@@ -41,7 +43,8 @@
                 })
                 .startPhotoPicker(this);
 ```
-<br/>
+
+
 选择单张图片并裁剪
 ```Java
         MediaPicker.getInstance()
@@ -58,7 +61,8 @@
                 })
                 .startImagePicker(this);
 ```
-<br/>
+
+
 选择多图
 ```Java
         MediaPicker.getInstance()
@@ -73,7 +77,8 @@
                 })
                 .startImagePicker(this, null);//第二个参数为已经选择的图片路径集合
 ```
-<br/>
+
+
 九图显示
 ```Java
 @BindLayout(R.layout.activity_sample_nine)
@@ -111,7 +116,8 @@ public class SampleNineActivity extends AppCompatActivity {
 }
 
 ```
-<br/>
+
+
 图片预览(放大缩小)
 ```Java
         List<String> list = new ArrayList<>();
@@ -126,7 +132,8 @@ public class SampleNineActivity extends AppCompatActivity {
         list.add("http://dpic.tiankong.com/5p/33/QJ6215180920.jpg");
         MediaPicker.getInstance().startImageViewer(this, list);
 ```
-<br/>
+
+
 视频选择
 ```Java
         MediaPicker.getInstance()
