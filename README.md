@@ -15,12 +15,12 @@
 ```
 
 其次实现MediaLoader，并设置到MediaPicker.getInstance().imageLoader(new GlideMediaLoader())
-···
+```
 public class GlideMediaLoader implements MediaLoader {
     @Override
     public void displayFileImage(ImageView imageView, String path) {
-         GlideApp.with(imageView.getContext())                             //配置上下文
-                .load(Uri.fromFile(new File(path)))      //设置图片路径(fix #8,文件名包含%符号 无法识别和显示)
+         GlideApp.with(imageView.getContext())
+                .load(Uri.fromFile(new File(path)))
                 .into(imageView);
     }
 
@@ -40,7 +40,7 @@ public class GlideMediaLoader implements MediaLoader {
         return null;
     }
 }
-···
+```
 
 ### 功能
 
