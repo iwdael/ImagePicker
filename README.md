@@ -16,9 +16,9 @@
 
 ```
 
-其次实现MediaLoader，并设置到ImagePicker.getInstance().imageLoader(new GlideMediaLoader())
+其次实现ImageLoader，并设置到ImagePicker.getInstance().imageLoader(new GlideImageLoader())
 ```
-public class GlideMediaLoader implements MediaLoader {
+public class GlideImageLoader implements ImageLoader {
     @Override
     public void displayFileImage(ImageView imageView, String path) {
          GlideApp.with(imageView.getContext())
