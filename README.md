@@ -1,5 +1,5 @@
-# MediaPicker 
-[![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/hacknife/MediaPicker) [![](https://img.shields.io/badge/version-1.3.0--alpha2-brightgreen.svg)](https://github.com/hacknife/MediaPicker)<br/>
+# ImagePicker 
+[![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/hacknife/ImagePicker) [![](https://img.shields.io/badge/version-1.3.0--alpha2-brightgreen.svg)](https://github.com/hacknife/ImagePicker)<br/>
 图片选择器满足你的一切需求，单选、多选、裁剪、拍照、九图、图片预览、单击放大、一应俱全，适配到Android8.0。如果UI色调不符合你的项目需求，可继承AbstractXXXActivity，重写相关布局，并在MediaPicker.getInstance().startXXX()方法中传入自定义的Activity。
 <br/><br/>
 ![](https://github.com/hacknife/ImagePicker/blob/master/screenshot.gif)
