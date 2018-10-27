@@ -1,12 +1,9 @@
 package com.hacknife.demoimagepicker;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.widget.ImageView;
 
-import com.hacknife.imagepicker.R;
-import com.hacknife.imagepicker.loader.ImageLoader;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.hacknife.mediapicker.loader.ImageLoader;
 
 import java.io.File;
 
@@ -14,7 +11,7 @@ import java.io.File;
  * author  : Hacknife
  * e-mail  : 4884280@qq.com
  * github  : http://github.com/hacknife
- * project : ImagePicker
+ * project : MediaPicker
  */
 public class GlideImageLoader implements ImageLoader {
     @Override

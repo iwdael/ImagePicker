@@ -12,7 +12,7 @@ import com.bumptech.glide.module.AppGlideModule;
  * author  : Hacknife
  * e-mail  : 4884280@qq.com
  * github  : http://github.com/hacknife
- * project : ImagePicker
+ * project : MediaPicker
  */
 @GlideModule
 public class Glide extends AppGlideModule {

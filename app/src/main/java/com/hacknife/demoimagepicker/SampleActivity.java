@@ -7,8 +7,8 @@ import android.widget.Toast;
 
 import com.hacknife.briefness.BindLayout;
 import com.hacknife.briefness.Briefness;
-import com.hacknife.imagepicker.ImagePicker;
-import com.hacknife.imagepicker.bean.ImageItem;
+import com.hacknife.mediapicker.MediaPicker;
+import com.hacknife.mediapicker.bean.ImageItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +21,13 @@ public class SampleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         briefnessor = (SampleActivityBriefnessor) Briefness.bind(this);
-        ImagePicker.getInstance().imageLoader(new GlideImageLoader());
+        MediaPicker.getInstance().imageLoader(new GlideImageLoader());
     }
 
     public void onTakePhotoClick() {
-        ImagePicker.getInstance()
+        MediaPicker.getInstance()
                 .crop(false)
-                .selectedListener(new ImagePicker.OnSelectedListener() {
+                .selectedListener(new MediaPicker.OnSelectedListener() {
                     @Override
                     public void onImageSelected(List<ImageItem> items) {
                         toast(items.toString());
@@ -37,11 +37,11 @@ public class SampleActivity extends AppCompatActivity {
     }
 
     public void onTakePhotoCropClick() {
-        ImagePicker.getInstance()
+        MediaPicker.getInstance()
                 .crop(true)
                 .outPutY(800)
                 .outPutX(800)
-                .selectedListener(new ImagePicker.OnSelectedListener() {
+                .selectedListener(new MediaPicker.OnSelectedListener() {
                     @Override
                     public void onImageSelected(List<ImageItem> items) {
                         toast(items.toString());
@@ -51,27 +51,27 @@ public class SampleActivity extends AppCompatActivity {
     }
 
     public void onPickerSinglePhotoClick() {
-        ImagePicker.getInstance()
+        MediaPicker.getInstance()
                 .multiMode(false)
                 .showCamera(true)
                 .crop(false)
                 .outPutY(800)
                 .outPutX(800)
-                .selectedListener(new ImagePicker.OnSelectedListener() {
+                .selectedListener(new MediaPicker.OnSelectedListener() {
                     @Override
                     public void onImageSelected(List<ImageItem> items) {
                         toast(items.toString());
                     }
                 })
-                .startImagePicker(this, null);
+                .startImagePicker(this);
     }
 
     public void onPickerMultiPhotoClick() {
-        ImagePicker.getInstance()
+        MediaPicker.getInstance()
                 .multiMode(true)
                 .selectLimit(8)
                 .showCamera(true)
-                .selectedListener(new ImagePicker.OnSelectedListener() {
+                .selectedListener(new MediaPicker.OnSelectedListener() {
                     @Override
                     public void onImageSelected(List<ImageItem> items) {
                         toast(items.toString());
@@ -81,8 +81,8 @@ public class SampleActivity extends AppCompatActivity {
     }
 
     public void onPickerVideoClick() {
-        ImagePicker.getInstance()
-                .selectedListener(new ImagePicker.OnSelectedListener() {
+        MediaPicker.getInstance()
+                .selectedListener(new MediaPicker.OnSelectedListener() {
                     @Override
                     public void onImageSelected(List<ImageItem> items) {
                         toast(items.toString());
@@ -94,7 +94,7 @@ public class SampleActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ImagePicker.getInstance().onActivityResult(requestCode, resultCode, data);
+        MediaPicker.getInstance().onActivityResult(requestCode, resultCode, data);
     }
 
 
@@ -118,6 +118,6 @@ public class SampleActivity extends AppCompatActivity {
         list.add("http://dpic.tiankong.com/xp/3t/QJ6230352510.jpg");
         list.add("http://dpic.tiankong.com/37/ha/QJ6534800776.jpg");
         list.add("http://dpic.tiankong.com/5p/33/QJ6215180920.jpg");
-        ImagePicker.getInstance().startImageViewer(this, list);
+        MediaPicker.getInstance().startImageViewer(this, list);
     }
 }
