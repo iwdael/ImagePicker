@@ -1,5 +1,6 @@
 package com.hacknife.demoimagepicker;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import com.hacknife.briefness.BindLayout;
 import com.hacknife.briefness.Briefness;
 import com.hacknife.mediapicker.MediaPicker;
 import com.hacknife.mediapicker.bean.ImageItem;
+import com.hacknife.onpermission.OnPermission;
+import com.hacknife.onpermission.Permission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,25 @@ public class SampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         briefnessor = (SampleActivityBriefnessor) Briefness.bind(this);
         MediaPicker.getInstance().imageLoader(new GlideMediaLoader());
+        new OnPermission(this).grant(new Permission() {
+            @Override
+            public String[] permissions() {
+                return new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                };
+            }
+
+            @Override
+            public void onGranted(String[] strings) {
+
+            }
+
+            @Override
+            public void onDenied(String[] strings) {
+                finish();
+            }
+        });
     }
 
     public void onTakePhotoClick() {

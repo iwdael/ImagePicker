@@ -29,4 +29,5 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.hacknife.briefness:briefness:v1.7.3'
     annotationProcessor 'com.hacknife.briefness:briefness-compiler:v1.7.3'
+    implementation 'com.hacknife:onpermission:v1.1.1'
 }
