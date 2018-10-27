@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hacknife.mediapicker">
+    package="com.hacknife.imagepicker">
 
 
     <!-- 往SDCard写入数据权限 -->
@@ -13,19 +13,19 @@
     <application>
 
         <activity
-            android:name="com.hacknife.mediapicker.ui.MediaGridActivity"
+            android:name="com.hacknife.imagepicker.ui.ImageGridActivity"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name="com.hacknife.mediapicker.ui.ImageCropActivity"
+            android:name="com.hacknife.imagepicker.ui.ImageCropActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="false" />
         <activity
-            android:name="com.hacknife.mediapicker.ui.ImagePreviewActivity"
+            android:name="com.hacknife.imagepicker.ui.ImagePreviewActivity"
             android:configChanges="orientation|screenSize" />
 
         <provider
-            android:name="com.hacknife.mediapicker.MediaPickerProvider"
-            android:authorities="${applicationId}.MediaPickerFileProvider"
+            android:name="com.hacknife.imagepicker.ImagePickerProvider"
+            android:authorities="${applicationId}.ImagePickerFileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -34,7 +34,7 @@
         </provider>
 
         <activity
-            android:name="com.hacknife.mediapicker.ui.ImageViewerActivity"
+            android:name="com.hacknife.imagepicker.ui.ImageViewerActivity"
             android:theme="@style/ImagePicker.Transparent" />
     </application>
 

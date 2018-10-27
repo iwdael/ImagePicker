@@ -1,22 +1,22 @@
 # ImagePicker 
-[![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/hacknife/ImagePicker) [![](https://img.shields.io/badge/version-1.3.0--alpha2-brightgreen.svg)](https://github.com/hacknife/ImagePicker)<br/>
-图片选择器满足你的一切需求，单选、多选、裁剪、拍照、九图、图片预览、单击放大、一应俱全，适配到Android8.0。如果UI色调不符合你的项目需求，可继承AbstractXXXActivity，重写相关布局，并在MediaPicker.getInstance().startXXX()方法中传入自定义的Activity。
+[![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/hacknife/ImagePicker) [![](https://img.shields.io/badge/version-1.3.0--alpha3-brightgreen.svg)](https://github.com/hacknife/ImagePicker)<br/>
+图片选择器满足你的一切需求，单选、多选、裁剪、拍照、九图、图片预览、单击放大、一应俱全，适配到Android8.0。如果UI色调不符合你的项目需求，可继承AbstractXXXActivity，重写相关布局，并在ImagePicker.getInstance().startXXX()方法中传入自定义的Activity。
 <br/><br/>
 ![](https://github.com/hacknife/ImagePicker/blob/master/screenshot.gif)
 #### 扫码安装，效果更好
 ![](https://github.com/hacknife/ImagePicker/blob/master/qrcode.png)
 ## 代码示例
-在使用MediaPicker前，必须在Activity中重写onActivityResult方法
+在使用ImagePicker前，必须在Activity中重写onActivityResult方法
 ```Java
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        MediaPicker.getInstance().onActivityResult(requestCode, resultCode, data);
+        ImagePicker.getInstance().onActivityResult(requestCode, resultCode, data);
     }
 
 ```
 
-其次实现MediaLoader，并设置到MediaPicker.getInstance().imageLoader(new GlideMediaLoader())
+其次实现MediaLoader，并设置到ImagePicker.getInstance().imageLoader(new GlideMediaLoader())
 ```
 public class GlideMediaLoader implements MediaLoader {
     @Override
@@ -48,9 +48,9 @@ public class GlideMediaLoader implements MediaLoader {
 
 #### 拍照
 ```Java
-        MediaPicker.getInstance()
+        ImagePicker.getInstance()
                 .crop(false)//是否裁剪
-                .selectedListener(new MediaPicker.OnSelectedListener() {
+                .selectedListener(new ImagePicker.OnSelectedListener() {
                     @Override
                     public void onImageSelected(List<ImageItem> items) {
                         toast(items.toString());
@@ -62,11 +62,11 @@ public class GlideMediaLoader implements MediaLoader {
 
 #### 拍照并裁剪
 ```Java
-        MediaPicker.getInstance()
+        ImagePicker.getInstance()
                 .crop(true)//是否裁剪
                 .outPutY(800)//裁剪大小
                 .outPutX(800)
-                .selectedListener(new MediaPicker.OnSelectedListener() {
+                .selectedListener(new ImagePicker.OnSelectedListener() {
                     @Override
                     public void onImageSelected(List<ImageItem> items) {
                         toast(items.toString());
@@ -78,13 +78,13 @@ public class GlideMediaLoader implements MediaLoader {
 
 #### 选择单张图片并裁剪
 ```Java
-        MediaPicker.getInstance()
+        ImagePicker.getInstance()
                 .multiMode(false)//是否多选
                 .showCamera(true)//是否显示拍照Item
                 .crop(false)//是否裁剪
                 .outPutY(800)
                 .outPutX(800)
-                .selectedListener(new MediaPicker.OnSelectedListener() {
+                .selectedListener(new ImagePicker.OnSelectedListener() {
                     @Override
                     public void onImageSelected(List<ImageItem> items) {
                         toast(items.toString());
@@ -96,11 +96,11 @@ public class GlideMediaLoader implements MediaLoader {
 
 #### 选择多图
 ```Java
-        MediaPicker.getInstance()
+        ImagePicker.getInstance()
                 .multiMode(true)//是否多选
                 .selectLimit(8)//图片限制
                 .showCamera(true)
-                .selectedListener(new MediaPicker.OnSelectedListener() {
+                .selectedListener(new ImagePicker.OnSelectedListener() {
                     @Override
                     public void onImageSelected(List<ImageItem> items) {
                         toast(items.toString());
@@ -161,14 +161,14 @@ public class SampleNineActivity extends AppCompatActivity {
         list.add("http://dpic.tiankong.com/xp/3t/QJ6230352510.jpg");
         list.add("http://dpic.tiankong.com/37/ha/QJ6534800776.jpg");
         list.add("http://dpic.tiankong.com/5p/33/QJ6215180920.jpg");
-        MediaPicker.getInstance().startImageViewer(this, list);
+        ImagePicker.getInstance().startImageViewer(this, list);
 ```
 
 
 #### 视频选择
 ```Java
-        MediaPicker.getInstance()
-                .selectedListener(new MediaPicker.OnSelectedListener() {
+        ImagePicker.getInstance()
+                .selectedListener(new ImagePicker.OnSelectedListener() {
                     @Override
                     public void onImageSelected(List<ImageItem> items) {
                         toast(items.toString());
@@ -193,7 +193,7 @@ public class SampleNineActivity extends AppCompatActivity {
 ```Java
 	dependencies {
             ...
-            implementation 'com.hacknife:mediapicker:version'
+            implementation 'com.hacknife:imagepicker:version'
 	}
 ```
 <br><br><br>

@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.hacknife.briefness.BindLayout;
 import com.hacknife.briefness.Briefness;
-import com.hacknife.mediapicker.adapter.ImageAdapter;
+import com.hacknife.imagepicker.adapter.ImageAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
