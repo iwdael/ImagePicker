@@ -180,7 +180,7 @@ public class SampleNineActivity extends AppCompatActivity {
 ```Java
 	dependencies {
             ...
-            implementation 'com.hacknife:imagepicker:version'
+            implementation 'com.hacknife:imagepicker:1.3.1'
 	}
 ```
 <br><br><br>
