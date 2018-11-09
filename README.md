@@ -1,5 +1,5 @@
 # ImagePicker 
-[![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/hacknife/ImagePicker) [![](https://img.shields.io/badge/version-1.3.0--alpha3-brightgreen.svg)](https://github.com/hacknife/ImagePicker)<br/>
+[![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/hacknife) [![](https://img.shields.io/badge/language-java-yellow.svg)](https://github.com/hacknife) [![](https://img.shields.io/badge/Jcenter-1.3.1-brightgreen.svg)](https://github.com/hacknife) [![](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/hacknife) [![](https://img.shields.io/badge/license-apache--2.0-green.svg)](https://github.com/hacknife) [![](https://img.shields.io/badge/api-19+-green.svg)](https://github.com/hacknife)<br/><br/>
 图片选择器满足你的一切需求，单选、多选、裁剪、拍照、九图、图片预览、单击放大、一应俱全，适配到Android8.0。如果UI色调不符合你的项目需求，可继承AbstractXXXActivity，重写相关布局，并在ImagePicker.getInstance().startXXX()方法中传入自定义的Activity。
 <br/><br/>
 ![](https://github.com/hacknife/ImagePicker/blob/master/screenshot.gif)
@@ -176,20 +176,7 @@ public class SampleNineActivity extends AppCompatActivity {
                 })
                 .startVideoPicker(this);
 ```
-## 如何配置
-将本仓库引入你的项目:
-### Step 1. 添加仓库到Build文件
-合并以下代码到项目根目录下的build.gradle文件的repositories尾。[点击查看详情](https://github.com/hacknife/CarouselBanner/blob/master/root_build.gradle.png)
-```Java
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://hacknife.com' }
-		}
-	}
-```
-### Step 2. 添加依赖   
-合并以下代码到需要使用的application Module的dependencies尾，注意替换version。[点击查看详情](https://github.com/hacknife/CarouselBanner/blob/master/application_build.gradle.png)
+#### 快速引入项目 
 ```Java
 	dependencies {
             ...

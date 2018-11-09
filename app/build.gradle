@@ -4,11 +4,10 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.hacknife.demoimagepicker"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -17,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
@@ -27,7 +30,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.hacknife.briefness:briefness:v1.7.3'
-    annotationProcessor 'com.hacknife.briefness:briefness-compiler:v1.7.3'
+    implementation 'com.hacknife.briefness:briefness:1.9.1'
+    annotationProcessor 'com.hacknife.briefness:briefness-compiler:1.9.1'
     implementation 'com.hacknife:onpermission:v1.1.1'
 }
